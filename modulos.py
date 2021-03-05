@@ -1,3 +1,4 @@
+from collections import Counter
 import re
 
 lista1A = ["tambor","cafe","tigre","caja","luna","primo","tiza","moda","pie","balde","pavo","color","planta","casa","rio"]
@@ -54,10 +55,22 @@ class Revisor():
             6:{},
             7:{},
             8:{}
-            } 
+            }
+        self.repeticiones={
+            0:{},
+            1:{},
+            2:{},
+            3:{},
+            4:{},
+            5:{},
+            6:{},
+            7:{},
+            8:{}
+        } 
         self.mainM=[]
         self.sideM=[]
-        self.extrasL=[]   
+        self.extrasL=[]
+        self.repeticionesM=[]   
 
     #entrada es un string           
     def limpiarEntrada(self,entrada):
@@ -94,6 +107,7 @@ class Revisor():
         aciertos=0
         intrusiones=0
         confabulaciones=0
+        reps=sum(self.repeticionesM[trial][0])+sum(self.repeticionesM[trial][1])+self.repeticionesM[trial][2]
         if trial == 5:
             for x in self.sideM[5]:
                 if x:
@@ -118,6 +132,8 @@ class Revisor():
         self.targets[trial]=aciertos
         self.intrusiones[trial]=intrusiones
         self.confab[trial]=confabulaciones
+        self.repeticiones[trial]=reps
+ 
 
     #entrada es una string
     def registrarTrial(self,entrada):
@@ -133,16 +149,32 @@ class Revisor():
             c=side.count(x)
             side_count.append(c)
         extras=self.sort(palabras,"extra")
+        extras_dict= dict(Counter(extras))
+        repeticiones_main=[]
+        for x in main_count:
+            if x>1:
+                repeticiones_main.append(x-1)
+            else:
+                repeticiones_main.append(0)
+        repeticiones_side=[]
+        for x in side_count:
+            if x>1:
+                repeticiones_side.append(x-1)
+            else:
+                repeticiones_side.append(0)
+        repeticiones_extra=sum(extras_dict.values())-len(extras_dict)
+        repeticiones_conj=[repeticiones_main,repeticiones_side,repeticiones_extra]
         self.mainM.append(main_count)
         self.sideM.append(side_count)
         self.extrasL.append(extras)
+        self.repeticionesM.append(repeticiones_conj)
         self.puntuarTrial()
 
 
 
-ejt0=""
+ejt0="tigre, tigre, mesa, mesa"
 ejt1="balde, mesa , loco, luna"
-ejt2="balde, mesa , loco, café, tigre, pavo, río, tiza"
+ejt2="balde, mesa , loco, café, tigre, pavo, loco, tiza"
 ejt3="tambor, mesa, loco, café, tigre, sapo, templo, perro"
 ejt4="tambor, café, balde, rio, taza, luna, pie, color, perro"
 ejt5="balde, mesa , loco, café, tigre, pavo, río, tiza"
@@ -157,12 +189,7 @@ revisor.registrarTrial(ejt3)
 revisor.registrarTrial(ejt4)
 revisor.registrarTrial(ejt5)
 
-print(revisor.extrasL)
-
-print(revisor.targets)
-print(revisor.intrusiones)
-print(revisor.confab)
-
+print(revisor.repeticiones)
 
 
 
