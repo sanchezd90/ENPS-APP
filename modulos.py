@@ -34,6 +34,11 @@ class Revisor():
             8:{},
             }
         self.intrusiones={
+            0:{},
+            1:{},
+            2:{},
+            3:{},
+            4:{},
             5:{},
             6:{},
             7:{},
@@ -60,7 +65,10 @@ class Revisor():
         output=[]
         for palabra in self.entrada:
             palabra = palabra.strip().lower().replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u")
-            output.append(palabra)
+            if len(palabra)>0:
+                output.append(palabra)
+            else:
+                output.append(None)
         return output
 
     #entrada es una palabra
@@ -80,6 +88,37 @@ class Revisor():
                     out.append(x)
         return out
 
+
+    def puntuarTrial(self):
+        trial=len(self.mainM)-1
+        aciertos=0
+        intrusiones=0
+        confabulaciones=0
+        if trial == 5:
+            for x in self.sideM[5]:
+                if x:
+                    aciertos+=1
+            for x in self.mainM[5]:
+                if x:
+                    intrusiones+=1
+            for x in self.extrasL[5]:
+                if x != None:
+                    confabulaciones+=1
+        else:
+            for x in self.mainM[trial]:
+                if x:
+                    aciertos+=1
+            for x in self.sideM[trial]:
+                if x:
+                    intrusiones+=1 
+            for x in self.extrasL[trial]:
+                if x != None:
+                    confabulaciones+=1
+         
+        self.targets[trial]=aciertos
+        self.intrusiones[trial]=intrusiones
+        self.confab[trial]=confabulaciones
+
     #entrada es una string
     def registrarTrial(self,entrada):
         palabras=self.limpiarEntrada(entrada)
@@ -97,35 +136,32 @@ class Revisor():
         self.mainM.append(main_count)
         self.sideM.append(side_count)
         self.extrasL.append(extras)
+        self.puntuarTrial()
 
-    def puntuarTrial(self,trial):
-        aciertos=0
-        if trial == 5:
-            for x in self.sideM[5]:
-                if x:
-                    aciertos+=1
-        else:
-            for x in self.mainM[trial]:
-                if x > 0:
-                    aciertos+=1  
-        self.targets[trial]=aciertos
 
-ejt1=""
-ejt2="balde, mesa , loco, luna"
-ejt3="balde, mesa , loco, café, tigre, pavo, río, tiza"
-ejt4="tambor, mesa, loco, café, tigre, sapo, templo, perro"
-ejt5="tambor, café, balde, rio, taza, luna, pie, color, perro"
+
+ejt0=""
+ejt1="balde, mesa , loco, luna"
+ejt2="balde, mesa , loco, café, tigre, pavo, río, tiza"
+ejt3="tambor, mesa, loco, café, tigre, sapo, templo, perro"
+ejt4="tambor, café, balde, rio, taza, luna, pie, color, perro"
+ejt5="balde, mesa , loco, café, tigre, pavo, río, tiza"
       
 
 revisor=Revisor(lista1A,lista1B)
 
+revisor.registrarTrial(ejt0)
 revisor.registrarTrial(ejt1)
 revisor.registrarTrial(ejt2)
 revisor.registrarTrial(ejt3)
 revisor.registrarTrial(ejt4)
 revisor.registrarTrial(ejt5)
-revisor.puntuarTrial(1)
-print(revisor.targets[1])
+
+print(revisor.extrasL)
+
+print(revisor.targets)
+print(revisor.intrusiones)
+print(revisor.confab)
 
 
 
