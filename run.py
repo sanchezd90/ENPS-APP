@@ -1,7 +1,14 @@
 
-lista=[1,2,3]
+dicc={
+    "a":2,
+    "b":3,
+    }
 
-print(sum(lista))
+dic2={
+    "c":dicc["a"]+dicc["b"]
+}
+
+print(dic2["c"])
 
 
 
