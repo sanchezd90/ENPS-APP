@@ -261,8 +261,6 @@ revisor.registrarTrial(ejt3)
 revisor.registrarTrial(ejt4)
 revisor.registrarTrial(ejt5)
 
-print(revisor.raw_scores)
-print(revisor.normas_sujeto)
 print(revisor.z_scores)
 
 
