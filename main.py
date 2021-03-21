@@ -99,7 +99,8 @@ def set_www():
             "mainM":[None,None,None,None,None,None,None,None,None],
             "sideM":[None,None,None,None,None,None,None,None,None],
             "extrasL":[None,None,None,None,None,None,None,None,None],
-            "repeticionesM":[None,None,None,None,None,None,None,None,None],  
+            "repeticionesM":[None,None,None,None,None,None,None,None,None],
+            "respuestasM":[None,None,None,None,None,None,None,None,None],  
             "raw_scores":{
                 "t1":None,
                 "t2":None,

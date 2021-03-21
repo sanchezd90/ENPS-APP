@@ -148,12 +148,16 @@ def codificarInput(entrada,listaA,listaB):
 
     repeticiones_extra=sum(extras_dict.values())-len(extras_dict)
     repeticiones_conj=[repeticiones_main,repeticiones_side,repeticiones_extra]
-   
-    return (main_count, side_count, extras, repeticiones_conj)
+
+    return (main_count, side_count, extras, repeticiones_conj,palabras)
 
 
 def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
     
+    for k,v in trialnames.items():
+        if k==trial_num:
+            trial_name=v
+
     #ajuste para que en el trial_num 6 y 8 ubique los datos en el lugar indicado (porque lo hace desde resumen)
     if last:
         trial_num=trial_num+1
@@ -171,6 +175,7 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         side_M=session["puntajes"]["sideM"]
         extras_L=session["puntajes"]["extrasL"]
         repeticiones_M=session["puntajes"]["repeticionesM"]
+        respuestas_M=session["puntajes"]["respuestasM"]
         
         #obtiene la lista de recuentos (main, side, extras, repeticiones)
         registro_trial=codificarInput(t_input,listaA,listaB)
@@ -178,18 +183,21 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         side=registro_trial[1]
         extras=registro_trial[2]
         repeticiones=registro_trial[3]
+        palabras=registro_trial[4]
         
         #se carga en el lugar correspondiente cada lista de recuentos del trial actual
         main_M[trial_num-1]=main
         side_M[trial_num-1]=side
         extras_L[trial_num-1]=extras
         repeticiones_M[trial_num-1]=repeticiones
+        respuestas_M[trial_num-1]=palabras
 
         #se actualiza las matrices en sesión con los recuentos del trial actual    
         session["puntajes"]["mainM"]=main_M
         session["puntajes"]["sideM"]=side_M
         session["puntajes"]["extrasL"]=extras_L
         session["puntajes"]["repeticionesM"]=repeticiones_M
+        session["puntajes"]["respuestasM"]=respuestas_M
 
         #--CARGA DE PUNTAJES--#
 
@@ -228,12 +236,7 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         #ajuste de num trial
         trial_num=trial_num-1
 
-        for k,v in trialnames.items():
-            if k==trial_num:
-                trial_name=v
-
         #registrar raw_scores de trials y convertir en z scores
-        
         raw_scores_S[trial_name]=aciertos
         z_scores_S[trial_name]=(aciertos-normas_sujeto[trial_name][0])/normas_sujeto[trial_name][1]
         
