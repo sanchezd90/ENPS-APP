@@ -1,4 +1,4 @@
-{% from "macros.html" import tabla_puntajes with context %}
+{% from "macros.html" import tabla_puntajes,checkbox,t_input with context %}
 
 <!doctype html>
 <html lang="es">
@@ -15,13 +15,17 @@
   <body>
     <h1>Trial {{short_name}}</h1>
 
-    <div>
-      <form action="/{{next_name}}" method="POST">
-        <input type=text name="texto">
-        <button type="submit" class="btn btn-primary">Continuar</button>
-      </form>
-      
-    </div>
+
+
+    {% if short_name== "Reconocimiento"%}
+
+    {{checkbox(lista_rec)}}
+
+    {% else %}
+
+    {{t_input()}}
+
+    {% endif %}
 
     {{tabla_puntajes()}}
 

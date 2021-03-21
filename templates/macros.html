@@ -90,3 +90,23 @@
     </table>
   </div>
 {%- endmacro %}
+
+{% macro t_input() -%}
+<div>
+  <form action="/{{next_name}}" method="POST">
+    <textarea name="respuesta"></textarea>
+    <button type="submit" class="btn btn-primary">Continuar</button>
+  </form> 
+</div>
+{%- endmacro %}
+
+{% macro checkbox(lista_rec) -%}
+<form action="/resumen2" method="POST">
+  {% for x in lista_rec%}
+  <input type="checkbox" name="respuesta" value="{{x}}" id="{{x}}">
+  <label class="form-check-label" for="{{x}}">"{{x}}"</label>
+  {% endfor %}
+  
+  <button type="submit" class="btn btn-primary">Finalizar</button>
+</form>
+{%- endmacro %}

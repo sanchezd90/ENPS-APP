@@ -39,9 +39,11 @@ def set_www():
         if request.form["lista"]=="0":
             session["listaA"]=lista1A
             session["listaB"]=lista1B
+            session["listaRec"]=rec1
         else:
             session["listaA"]=lista2A
             session["listaB"]=lista2B
+            session["listaRec"]=rec2
         #define qué normas se va a usar
         if request.form["normas"]=="0":
             normas=normas_Geffen
@@ -179,7 +181,7 @@ def t_www(trial_name):
     #variables para hacer tests. Eliminar al finalizar
     test=session["puntajes"]
     
-    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test)
+    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test,lista_rec=session["listaRec"])
 
 @app.route("/resumen2", methods=["GET","POST"])
 def resumen2_www():

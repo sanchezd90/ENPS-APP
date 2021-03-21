@@ -153,18 +153,21 @@ def codificarInput(entrada,listaA,listaB):
 
 
 def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
-    
-    for k,v in trialnames.items():
-        if k==trial_num:
-            trial_name=v
 
     #ajuste para que en el trial_num 6 y 8 ubique los datos en el lugar indicado (porque lo hace desde resumen)
+    #recupera el input del trial anterior desde la sesión
     if last:
         trial_num=trial_num+1
+        checkbox_list=request.form.getlist("respuesta")
+        t_input=""
+        for x in checkbox_list:
+            if t_input=="":
+                t_input=x
+            else:
+                t_input=t_input+","+x
+    else:
+        t_input=request.form.get("respuesta")
 
-    #recupera el input del trial anterior desde la sesión
-    t_input=request.form.get("texto")
-    
     if t_input==None:
         pass
     else:
@@ -235,6 +238,11 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
 
         #ajuste de num trial
         trial_num=trial_num-1
+
+        #esta definición tiene que quedar acá luego del ajuste del num trial
+        for k,v in trialnames.items():
+            if k==trial_num:
+                trial_name=v
 
         #registrar raw_scores de trials y convertir en z scores
         raw_scores_S[trial_name]=aciertos
