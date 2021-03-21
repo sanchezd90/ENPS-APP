@@ -2,6 +2,8 @@ from flask import Flask, render_template, redirect, url_for, request, Response, 
 from collections import Counter
 from normas import normas_Geffen
 import re
+import datetime
+
 
 trialnames={
     0:"t1",
@@ -249,11 +251,22 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         z_scores_S[trial_name]=(aciertos-normas_sujeto[trial_name][0])/normas_sujeto[trial_name][1]
         
         #registrar raw_scores de otros scores y convertir en z scores
-        if trial_num==6:
-            raw_scores_S["total_inmediato"]=raw_scores_S["t1"]+raw_scores_S["t2"]+raw_scores_S["t3"]+raw_scores_S["t4"]+raw_scores_S["t5"]
-            z_scores_S["total_inmediato"]=(aciertos-normas_sujeto["total_inmediato"][0])/normas_sujeto["total_inmediato"][1]
-        
+        try:
+            if trial_num==6:
+                raw_scores_S["total_inmediato"]=raw_scores_S["t1"]+raw_scores_S["t2"]+raw_scores_S["t3"]+raw_scores_S["t4"]+raw_scores_S["t5"]
+                z_scores_S["total_inmediato"]=(aciertos-normas_sujeto["total_inmediato"][0])/normas_sujeto["total_inmediato"][1]
+        except:
+            pass
+
+            
         #guardar scores en sesión
         session["puntajes"]["raw_scores"]=raw_scores_S
         session["puntajes"]["z_scores"]=z_scores_S
+
+        if trial_num==6:
+            now=datetime.datetime.now()
+            dead = now+datetime.timedelta(minutes=20)
+            timeUp=str(dead.hour)+":"+str(dead.minute)
+            session["timeUp_str"]=timeUp
+
 

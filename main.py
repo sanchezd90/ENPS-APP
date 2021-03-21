@@ -141,6 +141,9 @@ def set_www():
         #input es un registro para las palabras que se ingresan por trial. Se sobreescribe en cada ejecución del trial
         session["input"]=None
 
+        session["delayed_time"]=None
+        session["timeUp_str"]=None
+
         return redirect(url_for("resumen_www"))
     else:
         return redirect(url_for("config_www"))
@@ -178,10 +181,12 @@ def t_www(trial_name):
     normas_sujeto=session["normas_sujeto"]
     registrarTrial(listaA,listaB,trial_num,normas_sujeto)
 
+    timeUp_str=session["timeUp_str"]
+
     #variables para hacer tests. Eliminar al finalizar
     test=session["puntajes"]
     
-    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test,lista_rec=session["listaRec"])
+    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test,lista_rec=session["listaRec"],timeUp=timeUp_str,trial_num=trial_num)
 
 @app.route("/resumen2", methods=["GET","POST"])
 def resumen2_www():
@@ -198,7 +203,9 @@ def resumen2_www():
   
     test=session["puntajes"]
 
-    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion, test=test)
+    timeUp_str=session["timeUp_str"]
+
+    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion, test=test, trial_num=trial_num, timeUp=timeUp_str)
 
 @app.route("/resumen", methods=["GET","POST"])
 def resumen_www():
@@ -211,7 +218,9 @@ def resumen_www():
 
     test=session["puntajes"]
 
-    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion,test=test)
+    timeUp_str=session["timeUp_str"]
+
+    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion,test=test,trial_num=trial_num, timeUp=timeUp_str)
 
 
 app.run(host="localhost", port=8080, debug=True)

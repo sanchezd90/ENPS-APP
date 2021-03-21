@@ -1,4 +1,4 @@
-{% from "macros.html" import tabla_puntajes,checkbox,t_input with context %}
+{% from "macros.html" import tabla_puntajes,checkbox,t_input,links_trials,timeUp_m with context %}
 
 <!doctype html>
 <html lang="es">
@@ -15,7 +15,7 @@
   <body>
     <h1>Trial {{short_name}}</h1>
 
-
+    {{timeUp_m(trial_num)}}
 
     {% if short_name== "Reconocimiento"%}
 
@@ -26,6 +26,8 @@
     {{t_input()}}
 
     {% endif %}
+
+    {{links_trials()}}
 
     {{tabla_puntajes()}}
 

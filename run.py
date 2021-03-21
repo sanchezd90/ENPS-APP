@@ -1,4 +1,6 @@
-ax=[None,None,None,None,None,None,None,None,None]
+import datetime
 
-print(ax[3])
-
+now=datetime.datetime.now()
+print(now.strftime('%H:%M'))
+dead = now+datetime.timedelta(minutes=20)
+timeUp=str(dead.hour)+":"+str(dead.minute)

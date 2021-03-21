@@ -1,4 +1,4 @@
-{% from "macros.html" import tabla_puntajes with context %}
+{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m with context %}
 
 <!doctype html>
 <html lang="es">
@@ -20,13 +20,10 @@
     <p>{{sexo}}</p>
     <h2>Educacion</h2>
     <p>{{educacion}}</p>
-    <h2>Test1</h2>
-    <p>{{test1}}</p>
-    <h2>Test2</h2>
-    <p>{{test2}}</p>
 
-    <a href="/t1">Ir a trial 1</a>
-    <a href="/t7">Ir a Diferido</a>
+    {{timeUp_m(trial_num)}}
+
+    {{links_trials()}}
 
     {{tabla_puntajes()}}
 
