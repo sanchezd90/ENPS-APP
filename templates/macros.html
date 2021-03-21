@@ -1,0 +1,86 @@
+{% macro tabla_puntajes() -%}
+<div>
+    <table>
+      <tr>
+        <td>MainM</td>
+        {% for x in test["mainM"]%}
+          <td>{{x}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>SideM</td>
+        {% for x in test["sideM"]%}
+          <td>{{x}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>ExtrasL</td>
+        {% for x in test["extrasL"]%}
+          <td>{{x}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>RepeticionesM</td>
+        {% for x in test["repeticionesM"]%}
+          <td>{{x}}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <th>Puntajes</th>
+        {% for x in test["targets"]%}
+        <th>{{x}}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>Targets</td>
+        {% for x in test["targets"]%}
+        <td>{{test["targets"][x]}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>intrusiones</td>
+        {% for x in test["intrusiones"]%}
+        <td>{{test["intrusiones"][x]}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>confab</td>
+        {% for x in test["confab"]%}
+        <td>{{test["confab"][x]}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>repeticiones</td>
+        {% for x in test["repeticiones"]%}
+        <td>{{test["repeticiones"][x]}}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+<div>
+    <table>
+      <tr>
+        <th>Puntajes</th>
+        {% for x in test["raw_scores"]%}
+        <th>{{x}}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>Raw Scores</td>
+        {% for x in test["raw_scores"]%}
+        <td>{{test["raw_scores"][x]}}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>Z Scores</td>
+        {% for x in test["z_scores"]%}
+        <td>{{test["z_scores"][x]}}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+{%- endmacro %}

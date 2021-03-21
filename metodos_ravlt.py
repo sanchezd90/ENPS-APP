@@ -1,10 +1,23 @@
+from flask import Flask, render_template, redirect, url_for, request, Response, session
 from collections import Counter
 from normas import normas_Geffen
 import re
 
-#definición de los índices para buscar los datos del sujeto en cada score dentro de las normas
-#output: lista con tres indices nse,sexo y edad
+trialnames={
+    0:"t1",
+    1:"t2",
+    2:"t3",
+    3:"t4",    
+    4:"t5",
+    5:"tB",
+    6:"t6",
+    7:"t7",
+    8:"rec",
+    }
+
 def get_index(normas,nse,sexo,edad):
+    #definición de los índices para buscar los datos del sujeto en cada score dentro de las normas
+    #output: lista con tres indices nse,sexo y edad
     for y in normas["nse"]:
         if normas["nse"][y][0] <= int(nse) <= normas["nse"][y][1]:
             nse_index=y
@@ -17,9 +30,10 @@ def get_index(normas,nse,sexo,edad):
 
     return [nse_index,sex_index,edad_index]
 
-#definición de la media y desvío de cada score para el sujeto
-#output: diccionario con un key por score. Cada value es una lista de [media,desvio]
+
 def get_normas(normas, raw_scores, index):
+    #definición de la media y desvío de cada score para el sujeto
+    #output: diccionario con un key por score. Cada value es una lista de [media,desvio]
     nse_index=index[0]
     sex_index=index[1]
     edad_index=index[2]
@@ -28,8 +42,10 @@ def get_normas(normas, raw_scores, index):
         normas_sujeto[x]=[normas["norms"][x][nse_index][0][sex_index][edad_index],normas["norms"][x][nse_index][1][sex_index][edad_index]]
     return normas_sujeto
 
-#entrada es un string           
+           
 def limpiarEntrada(entrada):
+    #entrada es un string
+    #saca los espacios y saca tilde a las vocales
     entrada=entrada.split(",")
     output=[]
     for palabra in entrada:
@@ -40,8 +56,10 @@ def limpiarEntrada(entrada):
             output.append(None)
     return output
 
-#entrada es una palabra
+
 def sort(entrada,tipo,listaA,listaB):
+    #entrada es una palabra
+    #clasifica 
     out=[]
     if tipo=="main":    
         for x in entrada:
@@ -57,7 +75,7 @@ def sort(entrada,tipo,listaA,listaB):
                 out.append(x)
     return out
 
-def convert_scores(self):
+def convert_scores():
     for x in raw_scores:
         z_scores[x]=(raw_scores[x]-normas_sujeto[x][0])/normas_sujeto[x][1]
 
@@ -75,42 +93,33 @@ def update_raw(self):
         "total_inmediato":targets[0]+targets[1]+targets[2]+targets[3]+targets[4],
         }
 
-def puntuarTrial():
-    trial=len(mainM)-1
+def puntuarTrial(trial,repeticiones,side,main,extras):
     aciertos=0
     intrusiones=0
     confabulaciones=0
-    reps=sum(repeticionesM[trial][0])+sum(repeticionesM[trial][1])+repeticionesM[trial][2]
-    if trial == 5:
-        for x in sideM[5]:
-            if x:
-                aciertos+=1
-        for x in mainM[5]:
-            if x:
-                intrusiones+=1
-        for x in extrasL[5]:
-            if x != None:
-                confabulaciones+=1
-    else:
-        for x in mainM[trial]:
-            if x:
-                aciertos+=1
-        for x in sideM[trial]:
-            if x:
-                intrusiones+=1 
-        for x in extrasL[trial]:
-            if x != None:
-                confabulaciones+=1
-        
-    targets[trial]=aciertos
-    intrusiones[trial]=intrusiones
-    confab[trial]=confabulaciones
-    repeticiones[trial]=reps
-    update_raw()
-    convert_scores()
+    reps=sum(repeticiones[0])+sum(repeticiones[1])+repeticiones[2]
+    for x in main:
+        if x:
+            aciertos+=1
+    for x in side:
+        if x:
+            intrusiones+=1 
+    for x in extras:
+        if x != None:
+            confabulaciones+=1
 
-#entrada es una string
-def registrarTrial(entrada,listaA,listaB):
+    return(aciertos,intrusiones,confabulaciones,reps)    
+    #convert_scores()
+
+
+def codificarInput(entrada,listaA,listaB):
+    #entrada es una string
+    #toma el input
+    #lo limpia a través de limpiarEntrada()
+    #clasifica cada palabra a traves de sort()
+    #y arma un conteo de cuantas veces aparece una palabra target, contratarget, extra y repetida
+    #output es una tupla con cuatro listas
+
     palabras=limpiarEntrada(entrada)
     main=sort(palabras,"main",listaA,listaB)
     main_count=[]
@@ -141,3 +150,99 @@ def registrarTrial(entrada,listaA,listaB):
     repeticiones_conj=[repeticiones_main,repeticiones_side,repeticiones_extra]
    
     return (main_count, side_count, extras, repeticiones_conj)
+
+
+def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
+    
+    #ajuste para que en el trial_num 6 y 8 ubique los datos en el lugar indicado (porque lo hace desde resumen)
+    if last:
+        trial_num=trial_num+1
+
+    #recupera el input del trial anterior desde la sesión
+    t_input=request.form.get("texto")
+    
+    if t_input==None:
+        pass
+    else:
+        #--CARGA DE MATRICES--#
+        
+        #recupera las matrices de recuentos en sesión
+        main_M=session["puntajes"]["mainM"]
+        side_M=session["puntajes"]["sideM"]
+        extras_L=session["puntajes"]["extrasL"]
+        repeticiones_M=session["puntajes"]["repeticionesM"]
+        
+        #obtiene la lista de recuentos (main, side, extras, repeticiones)
+        registro_trial=codificarInput(t_input,listaA,listaB)
+        main=registro_trial[0]
+        side=registro_trial[1]
+        extras=registro_trial[2]
+        repeticiones=registro_trial[3]
+        
+        #se carga en el lugar correspondiente cada lista de recuentos del trial actual
+        main_M[trial_num-1]=main
+        side_M[trial_num-1]=side
+        extras_L[trial_num-1]=extras
+        repeticiones_M[trial_num-1]=repeticiones
+
+        #se actualiza las matrices en sesión con los recuentos del trial actual    
+        session["puntajes"]["mainM"]=main_M
+        session["puntajes"]["sideM"]=side_M
+        session["puntajes"]["extrasL"]=extras_L
+        session["puntajes"]["repeticionesM"]=repeticiones_M
+
+        #--CARGA DE PUNTAJES--#
+
+        #trae los registros en sesión de puntajes
+        aciertos_S=session["puntajes"]["targets"]
+        intrusiones_S=session["puntajes"]["intrusiones"]
+        confab_S=session["puntajes"]["confab"]
+        repeticiones_S=session["puntajes"]["repeticiones"]
+
+        #calcula los puntajes del trial
+        puntuaciones=puntuarTrial(trial_num,repeticiones,side,main,extras)
+        aciertos=puntuaciones[0]
+        intrusiones=puntuaciones[1]
+        confabulaciones=puntuaciones[2]
+        repeticiones=puntuaciones[3]
+
+        #se carga en el lugar correspondiente cada puntaje del trial actual
+        key=str(trial_num-1)
+        aciertos_S[key]=aciertos
+        intrusiones_S[key]=intrusiones
+        confab_S[key]=confabulaciones
+        repeticiones_S[key]=repeticiones
+
+        #se actualizan los puntajes en sesión con los recuentos del trial actual 
+        session["puntajes"]["targets"]=aciertos_S
+        session["puntajes"]["intrusiones"]=intrusiones_S
+        session["puntajes"]["confab"]=confab_S
+        session["puntajes"]["repeticiones"]=repeticiones_S
+
+        #--CALCULO DE Z-SCORES--#
+        
+        #trae los puntajes de sesión
+        raw_scores_S=session["puntajes"]["raw_scores"]
+        z_scores_S=session["puntajes"]["z_scores"]
+
+        #ajuste de num trial
+        trial_num=trial_num-1
+
+        for k,v in trialnames.items():
+            if k==trial_num:
+                trial_name=v
+
+        #registrar raw_scores de trials y convertir en z scores
+        
+        raw_scores_S[trial_name]=aciertos
+        z_scores_S[trial_name]=(aciertos-normas_sujeto[trial_name][0])/normas_sujeto[trial_name][1]
+        
+        #registrar raw_scores de otros scores y convertir en z scores
+        if trial_num==6:
+            raw_scores_S["total_inmediato"]=raw_scores_S["t1"]+raw_scores_S["t2"]+raw_scores_S["t3"]+raw_scores_S["t4"]+raw_scores_S["t5"]
+            z_scores_S["total_inmediato"]=(aciertos-normas_sujeto["total_inmediato"][0])/normas_sujeto["total_inmediato"][1]
+        
+        #guardar scores en sesión
+        session["puntajes"]["raw_scores"]=raw_scores_S
+        session["puntajes"]["z_scores"]=z_scores_S
+

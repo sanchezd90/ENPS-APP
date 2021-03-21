@@ -1,3 +1,5 @@
+{% from "macros.html" import tabla_puntajes with context %}
+
 <!doctype html>
 <html lang="es">
   <head>
@@ -18,11 +20,15 @@
     <p>{{sexo}}</p>
     <h2>Educacion</h2>
     <p>{{educacion}}</p>
-    <h2>mainM</h2>
-    <p>{{mainM}}</p>
+    <h2>Test1</h2>
+    <p>{{test1}}</p>
+    <h2>Test2</h2>
+    <p>{{test2}}</p>
 
     <a href="/t1">Ir a trial 1</a>
     <a href="/t7">Ir a Diferido</a>
+
+    {{tabla_puntajes()}}
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
