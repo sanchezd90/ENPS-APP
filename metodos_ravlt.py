@@ -252,7 +252,7 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         
         #registrar raw_scores de otros scores y convertir en z scores
         try:
-            if trial_num==6:
+            if trial_num==4:
                 raw_scores_S["total_inmediato"]=raw_scores_S["t1"]+raw_scores_S["t2"]+raw_scores_S["t3"]+raw_scores_S["t4"]+raw_scores_S["t5"]
                 z_scores_S["total_inmediato"]=(aciertos-normas_sujeto["total_inmediato"][0])/normas_sujeto["total_inmediato"][1]
         except:

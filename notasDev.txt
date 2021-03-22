@@ -1,7 +1,7 @@
 Próximos pasos
 
 -Incluir los composite scores
--Agregar función de tiempo
+-Visualización de los scores por trial y en resumen
 -Agregar función de guardar
 -Agregar gráfico de palabras mencionadas de lista target
 -Función de redacción de informe

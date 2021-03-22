@@ -183,10 +183,13 @@ def t_www(trial_name):
 
     timeUp_str=session["timeUp_str"]
 
+    raw_scores=session["puntajes"]["raw_scores"]
+    z_scores=session["puntajes"]["z_scores"]
+
     #variables para hacer tests. Eliminar al finalizar
     test=session["puntajes"]
     
-    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test,lista_rec=session["listaRec"],timeUp=timeUp_str,trial_num=trial_num)
+    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test,lista_rec=session["listaRec"],timeUp=timeUp_str,trial_num=trial_num, raw_scores=raw_scores, z_scores=z_scores)
 
 @app.route("/resumen2", methods=["GET","POST"])
 def resumen2_www():
@@ -205,7 +208,10 @@ def resumen2_www():
 
     timeUp_str=session["timeUp_str"]
 
-    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion, test=test, trial_num=trial_num, timeUp=timeUp_str)
+    raw_scores=session["puntajes"]["raw_scores"]
+    z_scores=session["puntajes"]["z_scores"]
+
+    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion, test=test, trial_num=trial_num, timeUp=timeUp_str, raw_scores=raw_scores, z_scores=z_scores)
 
 @app.route("/resumen", methods=["GET","POST"])
 def resumen_www():
@@ -220,7 +226,10 @@ def resumen_www():
 
     timeUp_str=session["timeUp_str"]
 
-    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion,test=test,trial_num=trial_num, timeUp=timeUp_str)
+    raw_scores=session["puntajes"]["raw_scores"]
+    z_scores=session["puntajes"]["z_scores"]
+
+    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion,test=test,trial_num=trial_num, timeUp=timeUp_str, raw_scores=raw_scores, z_scores=z_scores)
 
 
 app.run(host="localhost", port=8080, debug=True)

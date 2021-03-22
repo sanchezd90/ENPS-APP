@@ -1,5 +1,4 @@
 {% macro tabla_puntajes() -%}
-<!-- 
 <div>
   <table>
     <tr>
@@ -34,7 +33,6 @@
     </tr>
   </table>
 </div>
--->
 <div>
   <table>
     <tr>
@@ -103,6 +101,7 @@
 {%- endmacro %}
 
 {% macro checkbox(lista_rec) -%}
+<div>
 <form action="/resumen2" method="POST">
   {% for x in lista_rec%}
   <input type="checkbox" name="respuesta" value="{{x}}" id="{{x}}">
@@ -111,10 +110,11 @@
   
   <button type="submit" class="btn btn-primary">Continuar</button>
 </form>
+</div>
 {%- endmacro %}
 
 {% macro links_trials() %}
-
+<div>
 <a class="btn btn-primary" href="/resumen" role="button">Resumen</a>
 <a class="btn btn-primary" href="/t1" role="button">Trial 1</a>
 <a class="btn btn-primary" href="/t2" role="button">Trial 2</a>
@@ -125,17 +125,44 @@
 <a class="btn btn-primary" href="/t6" role="button">Trial 6</a>
 <a class="btn btn-primary" href="/t7" role="button">Diferido</a>
 <a class="btn btn-primary" href="/rec" role="button">Reconocimiento</a>
-
+</div>
+<div>
 <a class="btn btn-outline-warning" href="/" role="button">Reiniciar</a>
-
+</div>
 {%- endmacro %}
 
 {% macro timeUp_m(trial_num) %}
 
   {% if trial_num > 6 %}
-
+  <div>
     <h2>Horario para Diferido: {{timeUp}}</h2>
-
+  </div>
   {% endif %}
 
+{%- endmacro %}
+
+{% macro scores(raw_scores, z_scores) %}
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Puntajes</th>
+        <th scope="col">Bruto</th>
+        <th scope="col">Z</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for x in raw_scores %}
+      {% if raw_scores[x] != None%}
+      <tr>
+        <th scope="row">{{x}}</th>
+        <td>{{raw_scores[x]}}</td>
+        <td>{{z_scores[x]}}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {%- endmacro %}
