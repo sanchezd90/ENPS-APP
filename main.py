@@ -9,8 +9,12 @@ lista1A = ["tambor","cafe","tigre","caja","luna","primo","tiza","moda","pie","ba
 lista1B = ["mesa","campo","torre","nube","vaso","luz","cañon","boca","tinta","sapo","firma","templo","lado","bote","pez"]
 lista2A = ["pasto","fuente","media","auto","papel","pais","tio","raton","cara","rosa","plato","jabon","niño","pera","libro"]
 lista2B = ["playa","foca","rey","piano","saco","globo","vino","tierra","gato","frio","leche","menta","barba","mano","cama"]
-rec1 = ['forma', 'moda', 'bala', 'sol', 'paz', 'saco', 'lado', 'tipo', 'rojo', 'planta', 'leon', 'voto', 'vaso', 'flor', 'copa', 'rana', 'baile', 'cañon', 'tigre', 'torre', 'mesa', 'modo', 'firma', 'color', 'pez', 'boca', 'pavo', 'cajon', 'nube', 'dado', 'lunes', 'primo', 'hogar', 'balde', 'nariz', 'luz', 'silla', 'pava', 'bote', 'cinta', 'pie', 'caja', 'barco', 'pierna', 'tinta', 'tambor', 'luna', 'vale', 'sapo', 'te', 'rio', 'lluvia', 'paso', 'casa', 'bombo', 'campo', 'tiza', 'templo', 'calor', 'cafe']
-rec2 = ['raton', 'fiesta', 'rata', 'barba', 'region', 'jamon', 'niño', 'medio', 'saco', 'chico', 'sierra', 'ruta', 'vino', 'media', 'rey', 'playa', 'texto', 'menta', 'jabon', 'cama', 'tierra', 'rosa', 'cosa', 'piano', 'taco', 'pais', 'fruta', 'plato', 'globo', 'playa', 'mano', 'pato', 'cara', 'auto', 'lio', 'rostro', 'gato', 'pasto', 'papel', 'frio', 'puente', 'libro', 'pelo', 'pera', 'costa', 'foca', 'tio', 'leche', 'ley', 'fuente']
+#lista de 60 items
+rec1 = ("forma", "moda", "bala", "sol", "paz", "saco", "lado", "tipo", "rojo", "planta", "leon", "voto", "vaso", "flor", "copa", "rana", "baile", "cañon", "tigre", "torre", "mesa", "modo", "firma", "color", "pez", "boca", "pavo", "cajon", "nube", "dado", "lunes", "primo", "hogar", "balde", "nariz", "luz", "silla", "pava", "bote", "cinta", "pie", "caja", "barco", "pierna", "tinta", "tambor", "luna", "vale", "sapo", "te", "rio", "lluvia", "paso", "casa", "bombo", "campo", "tiza", "templo", "calor", "cafe")
+
+#lista de 50 items
+rec2 = ["raton", "fiesta", "rata", "barba", "region", "jamon", "niño", "medio", "saco", "chico", "sierra", "ruta", "vino", "media", "rey", "playa", "texto", "menta", "jabon", "cama", "tierra", "rosa", "cosa", "piano", "taco", "pais", "fruta", "plato", "globo", "playa", "mano", "pato", "cara", "auto", "lio", "rostro", "gato", "pasto", "papel", "frio", "puente", "libro", "pelo", "pera", "costa", "foca", "tio", "leche", "ley", "fuente"]
+
 trialnames={
     0:"t1",
     1:"t2",
@@ -148,7 +152,7 @@ def set_www():
     else:
         return redirect(url_for("config_www"))
 
-@app.route("/<string:trial_name>", methods=["GET","POST"])
+@app.route("/trial/<string:trial_name>", methods=["GET","POST"])
 def t_www(trial_name):
 
     #recibe (trial_name) y define el número de trial (trial_num) y cuál será el próximo trial con el que continúa
@@ -162,13 +166,20 @@ def t_www(trial_name):
         next_name=trialnames[next_num]
 
     #la excepción es reconocimiento porque el trial_name que recibe no sigue la lógica "tn" y además su próximo paso es volver a resumen
-    else:
+    elif trial_name=="rec":
         short_name="Reconocimiento"
         trial_num=8
         session["current_trial"]=trial_num
-        next_num=None
+        next_num=9
         next_name="last"
     
+    else:
+        short_name="Inicio"
+        trial_num=0
+        session["current_trial"]=trial_num
+        next_num=1
+        next_name="t1"
+
     #cambia la lista target si se trata del trial_num 6 (trialB)
     if trial_num==6:
         listaA=session["listaB"]
@@ -177,23 +188,24 @@ def t_www(trial_name):
         listaA=session["listaA"]
         listaB=session["listaB"]
     
+    #registra en sesión el trial previo
     normas_sujeto=session["normas_sujeto"]
     registrarTrial(listaA,listaB,trial_num,normas_sujeto)
 
+    #variable para definir tiempo de toma
     timeUp_str=session["timeUp_str"]
 
+    #variables necesarias para mostrar puntajes en pantalla
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
-
-    #variables para hacer tests. Eliminar al finalizar
-    test=session["puntajes"]
     
+    print(trial_num)
+
     return render_template(
         "trial.html", 
         short_name=short_name, 
         next_name=next_name,
-        test=test,
         lista_rec=session["listaRec"],
         timeUp=timeUp_str,
         trial_num=trial_num,
@@ -211,6 +223,7 @@ def last_www():
     trial_num=session["current_trial"]
     listaA=session["listaA"]
     listaB=session["listaB"]
+    
     normas_sujeto=session["normas_sujeto"]
     registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
@@ -218,8 +231,25 @@ def last_www():
 
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
+    any_score=any(raw_scores.values())
 
-    return redirect(url_for("resumen_www"))
+    print(trial_num)
+
+    session["puntajes"]["raw_scores"]=raw_scores
+    session["puntajes"]["z_scores"]=z_scores
+
+    return render_template(
+        "resumen.html", 
+        edad=edad, 
+        sexo=sexo, 
+        educacion=educacion,
+        trial_num=trial_num,
+        timeUp=timeUp_str,
+        raw_scores=raw_scores,
+        z_scores=z_scores,
+        any_score=any_score
+        )
+
 
 @app.route("/resumen", methods=["GET","POST"])
 def resumen_www():
@@ -230,20 +260,19 @@ def resumen_www():
     listaA=session["listaA"]
     listaB=session["listaB"]
 
-    test=session["puntajes"]
-
+    #variable para definir tiempo de toma
     timeUp_str=session["timeUp_str"]
 
+    #variables necesarias para mostrar puntajes en pantalla
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
-
+    print(trial_num)
     return render_template(
         "resumen.html", 
         edad=edad, 
         sexo=sexo, 
         educacion=educacion,
-        test=test,
         trial_num=trial_num,
         timeUp=timeUp_str,
         raw_scores=raw_scores,

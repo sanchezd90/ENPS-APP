@@ -263,10 +263,15 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         session["puntajes"]["raw_scores"]=raw_scores_S
         session["puntajes"]["z_scores"]=z_scores_S
 
+        #definir tiempo de toma del trial diferido
         if trial_num==6:
             now=datetime.datetime.now()
             dead = now+datetime.timedelta(minutes=20)
-            timeUp=str(dead.hour)+":"+str(dead.minute)
+            minute=str(dead.minute)
+            if len(minute)==1:
+                minute="0"+minute
+            timeUp=str(dead.hour)+":"+minute
             session["timeUp_str"]=timeUp
+
 
 

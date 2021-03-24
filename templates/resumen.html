@@ -21,7 +21,9 @@
     <h2>Educacion</h2>
     <p>{{educacion}}</p>
 
+    {% if timeUp != None%}
     {{timeUp_m(trial_num)}}
+    {% endif %}
 
     {{links_trials()}}
 

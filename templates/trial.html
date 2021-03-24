@@ -15,8 +15,9 @@
   <body>
     <h1>Trial {{short_name}}</h1>
 
-    
+    {% if timeUp != None%}
     {{timeUp_m(trial_num)}}
+    {% endif %}
 
     
     {% if short_name== "Reconocimiento"%}

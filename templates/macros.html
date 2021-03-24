@@ -93,7 +93,7 @@
 
 {% macro t_input() -%}
 <div>
-  <form action="/{{next_name}}" method="POST">
+  <form action="/trial/{{next_name}}" method="POST">
     <textarea name="respuesta"></textarea>
     <button type="submit" class="btn btn-primary">Continuar</button>
   </form> 
@@ -102,12 +102,20 @@
 
 {% macro checkbox(lista_rec) -%}
 <div>
-<form action="/{{next_name}}" method="POST">
-  {% for x in lista_rec%}
-  <input type="checkbox" name="respuesta" value="{{x}}" id="{{x}}">
-  <label class="form-check-label" for="{{x}}">"{{x}}"</label>
-  {% endfor %}
-  
+  <div>
+    <form action="/last" method="POST">
+      <table>
+        {%- for row in lista_rec|batch(10, '&nbsp;') %}
+          <tr>
+          {%- for column in row %}
+            <td>
+              <input type="checkbox" name="respuesta" value="{{column}}" id="{{column}}">
+              <label class="btn btn-primary" for="{{column}}">"{{column|title}}"</label>
+            </td>
+          {%- endfor %}
+          </tr>
+        {%- endfor %}
+        </table>
   <button type="submit" class="btn btn-primary">Continuar</button>
 </form>
 </div>
@@ -116,15 +124,15 @@
 {% macro links_trials() %}
 <div>
 <a class="btn btn-primary" href="/resumen" role="button">Resumen</a>
-<a class="btn btn-primary" href="/t1" role="button">Trial 1</a>
-<a class="btn btn-primary" href="/t2" role="button">Trial 2</a>
-<a class="btn btn-primary" href="/t3" role="button">Trial 3</a>
-<a class="btn btn-primary" href="/t4" role="button">Trial 4</a>
-<a class="btn btn-primary" href="/t5" role="button">Trial 5</a>
-<a class="btn btn-primary" href="/tB" role="button">Trial B</a>
-<a class="btn btn-primary" href="/t6" role="button">Trial 6</a>
-<a class="btn btn-primary" href="/t7" role="button">Diferido</a>
-<a class="btn btn-primary" href="/rec" role="button">Reconocimiento</a>
+<a class="btn btn-primary" href="/trial/t1" role="button">Trial 1</a>
+<a class="btn btn-primary" href="/trial/t2" role="button">Trial 2</a>
+<a class="btn btn-primary" href="/trial/t3" role="button">Trial 3</a>
+<a class="btn btn-primary" href="/trial/t4" role="button">Trial 4</a>
+<a class="btn btn-primary" href="/trial/t5" role="button">Trial 5</a>
+<a class="btn btn-primary" href="/trial/tB" role="button">Trial B</a>
+<a class="btn btn-primary" href="/trial/t6" role="button">Trial 6</a>
+<a class="btn btn-primary" href="/trial/t7" role="button">Diferido</a>
+<a class="btn btn-primary" href="/trial/rec" role="button">Reconocimiento</a>
 </div>
 <div>
 <a class="btn btn-outline-warning" href="/" role="button">Reiniciar</a>

@@ -1,7 +1,15 @@
 Próximos pasos
 
 -Incluir los composite scores
--Visualización de los scores por trial y en resumen
 -Agregar función de guardar
 -Agregar gráfico de palabras mencionadas de lista target
 -Función de redacción de informe
+
+-mejorar la vista de resumen (datos del paciente)
+-mostrar respuestas al trial si se vuelve
+-mostrar z con dos decimales
+-hacer más claros los nombres de los puntajes
+-mostrar normas en una página aparte
+
+ERRORES
+-los datos de reconocimiento no permanecen en la sesión. Si se va a otra página se pierden. 
