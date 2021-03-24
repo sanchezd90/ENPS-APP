@@ -24,7 +24,7 @@ trialnames={
     5:"tB",
     6:"t6",
     7:"t7",
-    8:"rec",
+    8:"t8",
     }
  
 
@@ -116,7 +116,7 @@ def set_www():
                 "tB":None,
                 "t6":None,
                 "t7":None,
-                "rec":None,
+                "t8":None,
                 "total_inmediato":None,
                 },
             "z_scores":{
@@ -128,7 +128,7 @@ def set_www():
                 "tB":None,
                 "t6":None,
                 "t7":None,
-                "rec":None,
+                "t8":None,
                 "total_inmediato":None,
                 }
             }
@@ -156,29 +156,16 @@ def set_www():
 def t_www(trial_name):
 
     #recibe (trial_name) y define el número de trial (trial_num) y cuál será el próximo trial con el que continúa
-    if trial_name[0]=="t":
-        short_name=trial_name[1]
-        for k,v in trialnames.items():
-            if v==trial_name:
-                trial_num=k
-        session["current_trial"]=trial_num
-        next_num=int(trial_num)+1
+    short_name=trial_name[1]
+    for k,v in trialnames.items():
+        if v==trial_name:
+            trial_num=k
+    session["current_trial"]=trial_num
+    next_num=int(trial_num)+1
+    if trial_num<8:
         next_name=trialnames[next_num]
-
-    #la excepción es reconocimiento porque el trial_name que recibe no sigue la lógica "tn" y además su próximo paso es volver a resumen
-    elif trial_name=="rec":
-        short_name="Reconocimiento"
-        trial_num=8
-        session["current_trial"]=trial_num
-        next_num=9
-        next_name="last"
-    
     else:
-        short_name="Inicio"
-        trial_num=0
-        session["current_trial"]=trial_num
-        next_num=1
-        next_name="t1"
+        next_name=None
 
     #cambia la lista target si se trata del trial_num 6 (trialB)
     if trial_num==6:
@@ -200,6 +187,10 @@ def t_www(trial_name):
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
     
+
+    test=session["puntajes"]
+
+
     print(trial_num)
 
     return render_template(
@@ -211,7 +202,8 @@ def t_www(trial_name):
         trial_num=trial_num,
         raw_scores=raw_scores,
         z_scores=z_scores,
-        any_score=any_score
+        any_score=any_score,
+        test=test
         )
 
 @app.route("/last", methods=["GET","POST"])
@@ -233,10 +225,7 @@ def last_www():
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
 
-    print(trial_num)
-
-    session["puntajes"]["raw_scores"]=raw_scores
-    session["puntajes"]["z_scores"]=z_scores
+    test=session["puntajes"]
 
     return render_template(
         "resumen.html", 
@@ -247,7 +236,8 @@ def last_www():
         timeUp=timeUp_str,
         raw_scores=raw_scores,
         z_scores=z_scores,
-        any_score=any_score
+        any_score=any_score,
+        test=test
         )
 
 
@@ -267,7 +257,9 @@ def resumen_www():
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
-    print(trial_num)
+
+    test=session["puntajes"]
+
     return render_template(
         "resumen.html", 
         edad=edad, 
@@ -277,7 +269,8 @@ def resumen_www():
         timeUp=timeUp_str,
         raw_scores=raw_scores,
         z_scores=z_scores,
-        any_score=any_score
+        any_score=any_score,
+        test=test
         )
 
 
