@@ -148,7 +148,6 @@ def set_www():
     else:
         return redirect(url_for("config_www"))
 
-
 @app.route("/<string:trial_name>", methods=["GET","POST"])
 def t_www(trial_name):
 
@@ -168,7 +167,7 @@ def t_www(trial_name):
         trial_num=8
         session["current_trial"]=trial_num
         next_num=None
-        next_name="resumen2"
+        next_name="last"
     
     #cambia la lista target si se trata del trial_num 6 (trialB)
     if trial_num==6:
@@ -185,33 +184,42 @@ def t_www(trial_name):
 
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
+    any_score=any(raw_scores.values())
 
     #variables para hacer tests. Eliminar al finalizar
     test=session["puntajes"]
     
-    return render_template("trial.html", short_name=short_name, next_name=next_name,test=test,lista_rec=session["listaRec"],timeUp=timeUp_str,trial_num=trial_num, raw_scores=raw_scores, z_scores=z_scores)
+    return render_template(
+        "trial.html", 
+        short_name=short_name, 
+        next_name=next_name,
+        test=test,
+        lista_rec=session["listaRec"],
+        timeUp=timeUp_str,
+        trial_num=trial_num,
+        raw_scores=raw_scores,
+        z_scores=z_scores,
+        any_score=any_score
+        )
 
-@app.route("/resumen2", methods=["GET","POST"])
-def resumen2_www():
+@app.route("/last", methods=["GET","POST"])
+def last_www():
+    
     edad=session["edad"]
     sexo=session["sexo"]
     educacion=session["educacion"]
     trial_num=session["current_trial"]
     listaA=session["listaA"]
     listaB=session["listaB"]
-
-    if trial_num==8:
-        normas_sujeto=session["normas_sujeto"]
-        registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
-  
-    test=session["puntajes"]
+    normas_sujeto=session["normas_sujeto"]
+    registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
     timeUp_str=session["timeUp_str"]
 
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
 
-    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion, test=test, trial_num=trial_num, timeUp=timeUp_str, raw_scores=raw_scores, z_scores=z_scores)
+    return redirect(url_for("resumen_www"))
 
 @app.route("/resumen", methods=["GET","POST"])
 def resumen_www():
@@ -228,8 +236,20 @@ def resumen_www():
 
     raw_scores=session["puntajes"]["raw_scores"]
     z_scores=session["puntajes"]["z_scores"]
+    any_score=any(raw_scores.values())
 
-    return render_template("resumen.html", edad=edad, sexo=sexo, educacion=educacion,test=test,trial_num=trial_num, timeUp=timeUp_str, raw_scores=raw_scores, z_scores=z_scores)
+    return render_template(
+        "resumen.html", 
+        edad=edad, 
+        sexo=sexo, 
+        educacion=educacion,
+        test=test,
+        trial_num=trial_num,
+        timeUp=timeUp_str,
+        raw_scores=raw_scores,
+        z_scores=z_scores,
+        any_score=any_score
+        )
 
 
 app.run(host="localhost", port=8080, debug=True)
