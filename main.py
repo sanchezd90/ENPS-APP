@@ -187,8 +187,13 @@ def t_www(trial_name):
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
     
-
-    test=session["puntajes"]
+    answer=session["puntajes"]["respuestasM"][trial_num]
+    try:
+        answer=",".join(answer)
+    except:
+        answer=""
+    
+    registro=session["puntajes"]
 
 
     print(trial_num)
@@ -203,7 +208,8 @@ def t_www(trial_name):
         raw_scores=raw_scores,
         z_scores=z_scores,
         any_score=any_score,
-        test=test
+        registro=registro,
+        answer=answer
         )
 
 @app.route("/last", methods=["GET","POST"])
@@ -225,7 +231,7 @@ def last_www():
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
 
-    test=session["puntajes"]
+    registro=session["puntajes"]
 
     return render_template(
         "resumen.html", 
@@ -237,7 +243,7 @@ def last_www():
         raw_scores=raw_scores,
         z_scores=z_scores,
         any_score=any_score,
-        test=test
+        registro=registro
         )
 
 
@@ -258,7 +264,7 @@ def resumen_www():
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
 
-    test=session["puntajes"]
+    registro=session["puntajes"]
 
     return render_template(
         "resumen.html", 
@@ -270,7 +276,7 @@ def resumen_www():
         raw_scores=raw_scores,
         z_scores=z_scores,
         any_score=any_score,
-        test=test
+        registro=registro
         )
 
 

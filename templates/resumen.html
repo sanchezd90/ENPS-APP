@@ -1,4 +1,4 @@
-{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m, scores with context %}
+{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m, scores, mas_info with context %}
 
 <!doctype html>
 <html lang="es">
@@ -13,25 +13,38 @@
     <title>RAVLT</title>
   </head>
   <body>
-    <h1>Resumen</h1>
-    <h2>Edad</h2>
-    <p>{{edad}}</p>
-    <h2>Sexo</h2>
-    <p>{{sexo}}</p>
-    <h2>Educacion</h2>
-    <p>{{educacion}}</p>
+
+    <div class="card border-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header">Datos del paciente</div>
+      <div class="card-body text-secondary">
+        <p class="card-text"><strong>Edad:</strong> {{edad}}</p>
+        <p class="card-text"><strong>Sexo:</strong> {{sexo | replace("0","Masculino") | replace("1","Femenino")}}</p>
+        <p class="card-text"><strong>Educacion:</strong> {{educacion}}</p>
+      </div>
+    </div>
 
     {% if timeUp != None%}
     {{timeUp_m(trial_num)}}
     {% endif %}
 
-    {{links_trials()}}
+    <div>
+      <a class="btn btn-success" href="/trial/t1" role="button">Iniciar</a>
+      <a class="btn btn-success" href="/trial/t7" role="button">Evocación</a>
+    </div>
+    
 
     {% if any_score %}
     {{scores(raw_scores, z_scores)}}
     {% endif %}
 
-    {{tabla_puntajes()}}
+    {% if any_score %}
+    {{ mas_info(registro) }}
+    {% endif %}
+
+    <div>
+      <a class="btn btn-primary" href="/resumen" role="button">Resumen</a>
+      <a class="btn btn-outline-danger" href="/" role="button">Reiniciar</a>
+    </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
