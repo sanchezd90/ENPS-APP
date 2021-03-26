@@ -206,7 +206,11 @@
         <tbody>
           {% for x in registro["targets"] %}
           <tr>
-            <th scope="row">{{x | replace("6","Lista B") | replace("8","Diferido") | replace("9","Reconocimiento") }}</th>
+            {% if x|int < 5 %}
+              <th scope="row">{{x|int +1}}</th>
+              {% else %}
+              <th scope="row">{{x | replace("5","Lista B") | replace("7","Diferido") | replace("8","Reconocimiento") }}</th>
+            {% endif %}
             <td>{{registro["confab"][x]}}</td>
             <td>{{registro["intrusiones"][x]}}</td>
             <td>{{registro["repeticiones"][x]}}</td>
