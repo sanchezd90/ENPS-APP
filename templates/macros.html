@@ -3,31 +3,31 @@
   <table>
     <tr>
       <td>MainM</td>
-      {% for x in test["mainM"]%}
+      {% for x in registro["mainM"]%}
         <td>{{x}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>SideM</td>
-      {% for x in test["sideM"]%}
+      {% for x in registro["sideM"]%}
         <td>{{x}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>ExtrasL</td>
-      {% for x in test["extrasL"]%}
+      {% for x in registro["extrasL"]%}
         <td>{{x}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>RepeticionesM</td>
-      {% for x in test["repeticionesM"]%}
+      {% for x in registro["repeticionesM"]%}
         <td>{{x}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>RespuestasM</td>
-      {% for x in test["respuestasM"]%}
+      {% for x in registro["respuestasM"]%}
         <td>{{x}}</td>
       {% endfor %}
     </tr>
@@ -37,32 +37,32 @@
   <table>
     <tr>
       <th>Puntajes</th>
-      {% for x in test["targets"]%}
+      {% for x in registro["targets"]%}
       <th>{{x}}</th>
       {% endfor %}
     </tr>
     <tr>
       <td>Targets</td>
-      {% for x in test["targets"]%}
-      <td>{{test["targets"][x]}}</td>
+      {% for x in registro["targets"]%}
+      <td>{{registro["targets"][x]}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>intrusiones</td>
-      {% for x in test["intrusiones"]%}
-      <td>{{test["intrusiones"][x]}}</td>
+      {% for x in registro["intrusiones"]%}
+      <td>{{registro["intrusiones"][x]}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>confab</td>
-      {% for x in test["confab"]%}
-      <td>{{test["confab"][x]}}</td>
+      {% for x in registro["confab"]%}
+      <td>{{registro["confab"][x]}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>repeticiones</td>
-      {% for x in test["repeticiones"]%}
-      <td>{{test["repeticiones"][x]}}</td>
+      {% for x in registro["repeticiones"]%}
+      <td>{{registro["repeticiones"][x]}}</td>
       {% endfor %}
     </tr>
   </table>
@@ -71,31 +71,35 @@
   <table>
     <tr>
       <th>Puntajes</th>
-      {% for x in test["raw_scores"]%}
+      {% for x in registro["raw_scores"]%}
       <th>{{x}}</th>
       {% endfor %}
     </tr>
     <tr>
       <td>Raw Scores</td>
-      {% for x in test["raw_scores"]%}
-      <td>{{test["raw_scores"][x]}}</td>
+      {% for x in registro["raw_scores"]%}
+      <td>{{registro["raw_scores"][x]}}</td>
       {% endfor %}
     </tr>
     <tr>
       <td>Z Scores</td>
-      {% for x in test["z_scores"]%}
-      <td>{{test["z_scores"][x]}}</td>
+      {% for x in registro["z_scores"]%}
+      <td>{{registro["z_scores"][x]}}</td>
       {% endfor %}
     </tr>
   </table>
 </div>
 {%- endmacro %}
 
-{% macro t_input() -%}
+{% macro t_input(answer) -%}
 <div>
   <form action="/trial/{{next_name}}" method="POST">
-    <textarea name="respuesta"></textarea>
-    <button type="submit" class="btn btn-primary">Continuar</button>
+    <div>
+      <textarea name="respuesta" class="col-sm-3">{{answer}}</textarea>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-success">Continuar</button>
+    </div>
   </form> 
 </div>
 {%- endmacro %}
@@ -110,7 +114,7 @@
           {%- for column in row %}
             <td>
               <input type="checkbox" name="respuesta" value="{{column}}" id="{{column}}">
-              <label class="btn btn-primary" for="{{column}}">"{{column|title}}"</label>
+              <label class="btn btn-outline-primary" for="{{column}}">"{{column|title}}"</label>
             </td>
           {%- endfor %}
           </tr>
@@ -123,20 +127,23 @@
 
 {% macro links_trials() %}
 <div>
-<a class="btn btn-primary" href="/resumen" role="button">Resumen</a>
-<a class="btn btn-primary" href="/trial/t1" role="button">Trial 1</a>
-<a class="btn btn-primary" href="/trial/t2" role="button">Trial 2</a>
-<a class="btn btn-primary" href="/trial/t3" role="button">Trial 3</a>
-<a class="btn btn-primary" href="/trial/t4" role="button">Trial 4</a>
-<a class="btn btn-primary" href="/trial/t5" role="button">Trial 5</a>
-<a class="btn btn-primary" href="/trial/tB" role="button">Trial B</a>
-<a class="btn btn-primary" href="/trial/t6" role="button">Trial 6</a>
-<a class="btn btn-primary" href="/trial/t7" role="button">Diferido</a>
-<a class="btn btn-primary" href="/trial/rec" role="button">Reconocimiento</a>
+  <div>
+    <a class="btn btn-primary" href="/trial/t1" role="button">T1</a>
+    <a class="btn btn-primary" href="/trial/t2" role="button">T2</a>
+    <a class="btn btn-primary" href="/trial/t3" role="button">T3</a>    
+  </div>
+  <div>
+    <a class="btn btn-primary" href="/trial/t4" role="button">T4</a>
+    <a class="btn btn-primary" href="/trial/t5" role="button">T5</a>
+    <a class="btn btn-primary" href="/trial/tB" role="button">TB</a>
+  </div>
+  <div>
+    <a class="btn btn-primary" href="/trial/t6" role="button">T6</a>
+    <a class="btn btn-primary" href="/trial/t7" role="button">Dif</a>
+    <a class="btn btn-primary" href="/trial/t8" role="button">Rec</a>
+  </div>
 </div>
-<div>
-<a class="btn btn-outline-warning" href="/" role="button">Reiniciar</a>
-</div>
+
 {%- endmacro %}
 
 {% macro timeUp_m(trial_num) %}
@@ -150,8 +157,7 @@
 {%- endmacro %}
 
 {% macro scores(raw_scores, z_scores) %}
-
-<div>
+<div class="col-sm-3">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -164,13 +170,53 @@
       {% for x in raw_scores %}
       {% if raw_scores[x] != None%}
       <tr>
-        <th scope="row">{{x}}</th>
+        {% if x != "total_inmediato"%}
+        <th scope="row"><a href="/trial/{{x}}">{{x | replace("t7","Diferido") | replace("t8","Reconocimiento") | replace("total_inmediato","Trials 1-5") | replace("tB","Lista B")}}</a></th>
+        {% else %}
+        <th scope="row">{{x | replace("t7","Diferido") | replace("t8","Reconocimiento") | replace("total_inmediato","Trials 1-5") | replace("tB","Lista B")}}</th>
+        {% endif %}
         <td>{{raw_scores[x]}}</td>
-        <td>{{z_scores[x]}}</td>
+        <td>{{z_scores[x]|round(2,"common")}}</td>
       </tr>
       {% endif %}
       {% endfor %}
     </tbody>
-  </table>
+  </table> 
 </div>
 {%- endmacro %}
+
+{% macro mas_info(registro) %}
+<div>
+  <p>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#masInfo" aria-expanded="false" aria-controls="masInfo">
+      Más información 
+    </button>
+  </p>
+  <div class="collapse" id="masInfo">
+    <div class="card card-body col-sm-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Trials</th>
+            <th scope="col">Confab</th>
+            <th scope="col">Intr</th>
+            <th scope="col">Repet</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for x in registro["targets"] %}
+          <tr>
+            <th scope="row">{{x | replace("7","Diferido") | replace("8","Reconocimiento")  | replace("5","Lista B")}}</th>
+            <td>{{registro["confab"][x]}}</td>
+            <td>{{registro["intrusiones"][x]}}</td>
+            <td>{{registro["repeticiones"][x]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> 
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+

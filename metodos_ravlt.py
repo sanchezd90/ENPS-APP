@@ -14,7 +14,7 @@ trialnames={
     5:"tB",
     6:"t6",
     7:"t7",
-    8:"rec",
+    8:"t8",
     }
 
 def get_index(normas,nse,sexo,edad):
@@ -91,7 +91,7 @@ def update_raw(self):
         "tB":targets[5],
         "t6":targets[6],
         "t7":targets[7],
-        "rec":targets[8],
+        "t8":targets[8],
         "total_inmediato":targets[0]+targets[1]+targets[2]+targets[3]+targets[4],
         }
 
