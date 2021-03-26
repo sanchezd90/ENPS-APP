@@ -206,7 +206,7 @@
         <tbody>
           {% for x in registro["targets"] %}
           <tr>
-            <th scope="row">{{x | replace("7","Diferido") | replace("8","Reconocimiento")  | replace("5","Lista B")}}</th>
+            <th scope="row">{{x | replace("6","Lista B") | replace("8","Diferido") | replace("9","Reconocimiento") }}</th>
             <td>{{registro["confab"][x]}}</td>
             <td>{{registro["intrusiones"][x]}}</td>
             <td>{{registro["repeticiones"][x]}}</td>
@@ -217,6 +217,45 @@
     </div>
   </div>
 </div>
+{%- endmacro %}
+
+{% macro targets_chart(listaA,mainM) %}
+<table>
+  <tr>
+    <td></td>
+    <td>T1</td>
+    <td>T2</td>
+    <td>T3</td>
+    <td>T4</td>
+    <td>T5</td>
+    <td>T6</td>
+    <td>Dif</td>
+    <td>Rec</td>
+  </tr>
+  {% for x in range(0,15) %}
+  <tr>
+    <td>{{listaA[x]}}</td>
+      {% for y in range(0,5)%}
+        {% if mainM[y]!=None%}
+          {% if mainM[y][x] > 0%}
+            <td bgcolor="green"></td>
+          {% else %}
+            <td bgcolor="white"></td>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% for y in range(6,9)%}
+        {% if mainM[y]!=None%}
+          {% if mainM[y][x] > 0%}
+            <td bgcolor="green"></td>
+          {% else %}
+            <td bgcolor="white"></td>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
 {%- endmacro %}
 
 

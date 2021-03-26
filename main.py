@@ -209,6 +209,8 @@ def t_www(trial_name):
         z_scores=z_scores,
         any_score=any_score,
         registro=registro,
+        listaA=listaA,
+        mainM=registro["mainM"],
         answer=answer
         )
 
@@ -243,7 +245,9 @@ def last_www():
         raw_scores=raw_scores,
         z_scores=z_scores,
         any_score=any_score,
-        registro=registro
+        registro=registro,
+        listaA=listaA,
+        mainM=registro["mainM"]
         )
 
 
@@ -276,7 +280,9 @@ def resumen_www():
         raw_scores=raw_scores,
         z_scores=z_scores,
         any_score=any_score,
-        registro=registro
+        registro=registro,
+        listaA=listaA,
+        mainM=registro["mainM"]
         )
 
 

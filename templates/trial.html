@@ -1,4 +1,4 @@
-{% from "macros.html" import tabla_puntajes,checkbox,t_input,links_trials,timeUp_m, scores, mas_info with context %}
+{% from "macros.html" import tabla_puntajes,checkbox,t_input,links_trials,timeUp_m, scores, mas_info,targets_chart with context %}
 
 <!doctype html>
 <html lang="es">
@@ -31,7 +31,7 @@
     {% endif %}
 
   
-
+    {{targets_chart(listaA,mainM)}}
   
     {% if any_score %}
     {{scores(raw_scores, z_scores)}}

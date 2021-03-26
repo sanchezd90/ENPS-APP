@@ -2,7 +2,6 @@ Próximos pasos
 
 -Incluir los composite scores
 -Agregar función de guardar
--Agregar gráfico de palabras mencionadas de lista target
 -Función de redacción de informe
 -mostrar normas en una página aparte
 

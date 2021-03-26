@@ -1,4 +1,4 @@
-{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m, scores, mas_info with context %}
+{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m, scores, mas_info,targets_chart with context %}
 
 <!doctype html>
 <html lang="es">
@@ -40,6 +40,8 @@
     {% if any_score %}
     {{ mas_info(registro) }}
     {% endif %}
+
+    {{targets_chart(listaA,mainM)}}
 
     <div>
       <a class="btn btn-primary" href="/resumen" role="button">Resumen</a>
