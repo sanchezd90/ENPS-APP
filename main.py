@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, session
 from metodos_ravlt import *
-from query import *
-
+from metodos_db import *
+import datetime
 
 app = Flask(__name__)
 app.secret_key="a2S3d4F"
@@ -37,6 +37,7 @@ def config_www():
 @app.route("/set", methods=["GET","POST"])
 def set_www():
     if request.method == "POST":
+        session["dni"]=request.form["dni"]
         session["edad"]=request.form["edad"]
         session["educacion"]=request.form["educacion"]
         session["sexo"]=request.form["sexo"]
@@ -60,48 +61,48 @@ def set_www():
         #z_scores parten de con valor None
         session["puntajes"]={
             "targets":{
-                0:0,
-                1:0,
-                2:0,
-                3:0,
-                4:0,
-                5:0,
-                6:0,
-                7:0,
-                8:0,
+                "0":0,
+                "1":0,
+                "2":0,
+                "3":0,
+                "4":0,
+                "5":0,
+                "6":0,
+                "7":0,
+                "8":0,
                 },
             "intrusiones":{
-                0:0,
-                1:0,
-                2:0,
-                3:0,
-                4:0,
-                5:0,
-                6:0,
-                7:0,
-                8:0,
+                "0":0,
+                "1":0,
+                "2":0,
+                "3":0,
+                "4":0,
+                "5":0,
+                "6":0,
+                "7":0,
+                "8":0,
                 },
             "confab":{
-                0:0,
-                1:0,
-                2:0,
-                3:0,
-                4:0,
-                5:0,
-                6:0,
-                7:0,
-                8:0
+                "0":0,
+                "1":0,
+                "2":0,
+                "3":0,
+                "4":0,
+                "5":0,
+                "6":0,
+                "7":0,
+                "8":0
                 },
             "repeticiones":{
-                0:0,
-                1:0,
-                2:0,
-                3:0,
-                4:0,
-                5:0,
-                6:0,
-                7:0,
-                8:0
+                "0":0,
+                "1":0,
+                "2":0,
+                "3":0,
+                "4":0,
+                "5":0,
+                "6":0,
+                "7":0,
+                "8":0
                 },   
             "mainM":[None,None,None,None,None,None,None,None,None],
             "sideM":[None,None,None,None,None,None,None,None,None],
@@ -148,6 +149,13 @@ def set_www():
 
         session["delayed_time"]=None
         session["timeUp_str"]=None
+
+        dicc_session=dict(session)
+        tstamp=round(datetime.datetime.now().timestamp())
+        codigo_ev=dicc_session["dni"]+"_"+str(tstamp)
+        session["codigo"]=codigo_ev
+        dicc_session["codigo"]=codigo_ev
+        insert_doc(dicc_session)
 
         return redirect(url_for("resumen_www"))
     else:

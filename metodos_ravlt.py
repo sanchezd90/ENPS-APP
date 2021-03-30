@@ -1,9 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, session
 from collections import Counter
-from normas import normas_Geffen
 import re
 import datetime
+import pymongo
+from metodos_db import *
 
+cluster=pymongo.MongoClient("mongodb+srv://sanchezd90:dbuser-L6H6@cluster0.wwnbb.mongodb.net/<ENPS>?retryWrites=true&w=majority")
+db=cluster["ENPS"]
+col=db["normas"]
+doc=col.find({"prueba":"RAVLT"})
+normas=doc[0]
 
 trialnames={
     0:"t1",
@@ -273,5 +279,8 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
             timeUp=str(dead.hour)+":"+minute
             session["timeUp_str"]=timeUp
 
+        codigo=session["codigo"]
+        datos=session["puntajes"]
+        update_doc(codigo,datos)
 
 
