@@ -1,5 +1,0 @@
-rec1 = ["forma", "moda", "bala", "sol", "paz", "saco", "lado", "tipo", "rojo", "planta", "leon", "voto", "vaso", "flor", "copa", "rana", "baile", "cañon", "tigre", "torre", "mesa", "modo", "firma", "color", "pez", "boca", "pavo", "cajon", "nube", "dado", "lunes", "primo", "hogar", "balde", "nariz", "luz", "silla", "pava", "bote", "cinta", "pie", "caja", "barco", "pierna", "tinta", "tambor", "luna", "vale", "sapo", "te", "rio", "lluvia", "paso", "casa", "bombo", "campo", "tiza", "templo", "calor", "cafe"]
-rec2 = ["raton", "fiesta", "rata", "barba", "region", "jamon", "niño", "medio", "saco", "chico", "sierra", "ruta", "vino", "media", "rey", "playa", "texto", "menta", "jabon", "cama", "tierra", "rosa", "cosa", "piano", "taco", "pais", "fruta", "plato", "globo", "playa", "mano", "pato", "cara", "auto", "lio", "rostro", "gato", "pasto", "papel", "frio", "puente", "libro", "pelo", "pera", "costa", "foca", "tio", "leche", "ley", "fuente"]
-
-for i,x in enumerate(rec1):
-    print(i,x)

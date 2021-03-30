@@ -17,23 +17,23 @@ trialnames={
     8:"t8",
     }
 
-def get_index(normas,nse,sexo,edad):
+def set_index(normas,nse,sexo,edad):
     #definición de los índices para buscar los datos del sujeto en cada score dentro de las normas
     #output: lista con tres indices nse,sexo y edad
     for y in normas["nse"]:
         if normas["nse"][y][0] <= int(nse) <= normas["nse"][y][1]:
-            nse_index=y
+            nse_index=int(y)
 
     sex_index=int(sexo)
 
     for x in normas["edad"]:
         if normas["edad"][x][0] <= int(edad) <= normas["edad"][x][1]:
-            edad_index=x
+            edad_index=int(x)
 
     return [nse_index,sex_index,edad_index]
 
 
-def get_normas(normas, raw_scores, index):
+def set_norms(normas, raw_scores, index):
     #definición de la media y desvío de cada score para el sujeto
     #output: diccionario con un key por score. Cada value es una lista de [media,desvio]
     nse_index=index[0]
@@ -41,7 +41,7 @@ def get_normas(normas, raw_scores, index):
     edad_index=index[2]
     normas_sujeto={}
     for x in raw_scores:
-        normas_sujeto[x]=[normas["norms"][x][nse_index][0][sex_index][edad_index],normas["norms"][x][nse_index][1][sex_index][edad_index]]
+        normas_sujeto[x]=[normas["normas"][x][nse_index][0][sex_index][edad_index],normas["normas"][x][nse_index][1][sex_index][edad_index]]
     return normas_sujeto
 
            

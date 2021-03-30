@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, session
 from metodos_ravlt import *
-import normas
+from query import *
+
 
 app = Flask(__name__)
 app.secret_key="a2S3d4F"
@@ -48,9 +49,9 @@ def set_www():
             session["listaA"]=lista2A
             session["listaB"]=lista2B
             session["listaRec"]=rec2
-        #define qué normas se va a usar
-        if request.form["normas"]=="0":
-            normas=normas_Geffen
+        #define qué normas se va a usar y las trae de mongoDB
+        normas_name=request.form["normas"]
+        normas=get_norms("RAVLT",normas_name)
         
         #se inician los diccionarios de sesión para almacenar los puntajes
         #targets, intrusiones, confab y repeticiones parten de 0. 
@@ -133,11 +134,11 @@ def set_www():
                 }
             }
         
-        #get_index trae la lista de indices que se van a usar para buscar dentro de las normas los valores que le corresponden al sujeto
-        index=get_index(normas,session["educacion"],session["sexo"],session["edad"])
+        #set_index trae la lista de indices que se van a usar para buscar dentro de las normas los valores que le corresponden al sujeto
+        index=set_index(normas,session["educacion"],session["sexo"],session["edad"])
         
         #get normas trae las normas del sujeto
-        session["normas_sujeto"]=get_normas(normas,session["puntajes"]["raw_scores"],index)
+        session["normas_sujeto"]=set_norms(normas,session["puntajes"]["raw_scores"],index)
         
         #current_trial es un registro para definir qué trial ya fue completado. El trial como número según la definición inicial de trialnames (linea 14)
         session["current_trial"]=0
