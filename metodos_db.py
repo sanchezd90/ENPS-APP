@@ -20,6 +20,12 @@ def update_doc(codigo,datos):
     newvalues={ "$set": { "puntajes": datos } }
     mycol.update_one(myquery, newvalues)
 
+def get_data(codigo,key):
+    mycol=db["evsApp"]
+    myquery = { "codigo": codigo }
+    field={"_id":0, key:1}
+    q=mycol.find(myquery,field)
+    return q[0]
 
 
 

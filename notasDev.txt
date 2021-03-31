@@ -1,12 +1,11 @@
 Próximos pasos
 
 -Incluir los composite scores
--Agregar función de guardar
 -Función de redacción de informe
 -mostrar normas en una página aparte
 
 
 ERRORES
--los datos de reconocimiento no permanecen en la sesión. Si se va a otra página se pierden. 
+
 
 #estructura de los datos: norms[SNE][medida][sexo][edad]

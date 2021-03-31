@@ -164,6 +164,8 @@ def set_www():
 @app.route("/trial/<string:trial_name>", methods=["GET","POST"])
 def t_www(trial_name):
 
+    save_last()
+
     #recibe (trial_name) y define el número de trial (trial_num) y cuál será el próximo trial con el que continúa
     short_name=trial_name[1]
     for k,v in trialnames.items():
@@ -204,8 +206,9 @@ def t_www(trial_name):
     
     registro=session["puntajes"]
 
-
-    print(trial_num)
+    codigo=session["codigo"]
+    checkbox_dict=get_data(codigo,"puntajes.respuestasM")
+    checkbox_list=checkbox_dict["puntajes"]["respuestasM"][8]
 
     return render_template(
         "trial.html", 
@@ -220,7 +223,8 @@ def t_www(trial_name):
         registro=registro,
         listaA=listaA,
         mainM=registro["mainM"],
-        answer=answer
+        answer=answer,
+        checkbox_list=checkbox_list
         )
 
 @app.route("/last", methods=["GET","POST"])
@@ -262,6 +266,9 @@ def last_www():
 
 @app.route("/resumen", methods=["GET","POST"])
 def resumen_www():
+    
+    save_last()    
+    
     edad=session["edad"]
     sexo=session["sexo"]
     educacion=session["educacion"]

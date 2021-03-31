@@ -104,7 +104,7 @@
 </div>
 {%- endmacro %}
 
-{% macro checkbox(lista_rec) -%}
+{% macro checkbox(lista_rec,checkbox_list) -%}
 <div>
   <div>
     <form action="/last" method="POST">
@@ -113,7 +113,11 @@
           <tr>
           {%- for column in row %}
             <td>
-              <input type="checkbox" name="respuesta" value="{{column}}" id="{{column}}">
+              {% if column is in checkbox_list%}
+              <input type="checkbox" name="respuesta" value="{{column}}" id="{{column}}" checked>
+              {% else %}
+              <input type="checkbox" name="respuesta" value="{{column}}" id="{{column}}" >
+              {% endif %}
               <label class="btn btn-outline-primary" for="{{column}}">"{{column|title}}"</label>
             </td>
           {%- endfor %}

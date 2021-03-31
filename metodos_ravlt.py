@@ -283,4 +283,26 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         datos=session["puntajes"]
         update_doc(codigo,datos)
 
+def save_last():
+    codigo=session["codigo"]
+    t8_raw=get_data(codigo,"puntajes.raw_scores.t8")
+    t8_raw=t8_raw["puntajes"]["raw_scores"]["t8"]
+    if t8_raw != None:
+        session["puntajes"]["raw_scores"]["t8"]=t8_raw
+        t8_z=get_data(codigo,"puntajes.z_scores.t8")
+        t8_z=t8_z["puntajes"]["z_scores"]["t8"]
+        session["puntajes"]["z_scores"]["t8"]=t8_z
+        keys_d=["targets","intrusiones","confab","repeticiones"]
+        for k in keys_d:
+            string="puntajes."+k+".8"
+            t8_k=get_data(codigo,string)
+            t8_k=t8_k["puntajes"][k]["8"]
+            session["puntajes"][k]["8"]=t8_k
+        keys_l=["mainM","sideM","extrasL","repeticionesM","respuestasM"]
+        for k in keys_l:
+            string="puntajes."+k
+            t8_k=get_data(codigo,string)
+            t8_k=t8_k["puntajes"][k][8]
+            session["puntajes"][k][8]=t8_k
+     
 
