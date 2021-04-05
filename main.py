@@ -209,6 +209,8 @@ def t_www(trial_name):
     codigo=session["codigo"]
     checkbox_dict=get_data(codigo,"puntajes.respuestasM")
     checkbox_list=checkbox_dict["puntajes"]["respuestasM"][8]
+    if checkbox_list==None:
+        checkbox_list=[]
 
     return render_template(
         "trial.html", 
@@ -303,5 +305,5 @@ def resumen_www():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=8080)
+  app.run()
 
