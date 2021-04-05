@@ -1,7 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, session
 from metodos_ravlt import *
 from metodos_db import *
+from metodos_redaccion import *
+
 import datetime
+
 
 app = Flask(__name__)
 app.secret_key="a2S3d4F"
@@ -37,6 +40,8 @@ def config_www():
 @app.route("/set", methods=["GET","POST"])
 def set_www():
     if request.method == "POST":
+        session["nombre"]=request.form["nombre"]
+        session["apellido"]=request.form["apellido"]
         session["dni"]=request.form["dni"]
         session["edad"]=request.form["edad"]
         session["educacion"]=request.form["educacion"]
@@ -232,8 +237,10 @@ def t_www(trial_name):
 @app.route("/last", methods=["GET","POST"])
 def last_www():
     
-    edad=session["edad"]
+    edad=int(session["edad"])
     sexo=session["sexo"]
+    nombre=session["nombre"]
+    apellido=session["apellido"]
     educacion=session["educacion"]
     trial_num=session["current_trial"]
     listaA=session["listaA"]
@@ -250,8 +257,13 @@ def last_www():
 
     registro=session["puntajes"]
 
+    p_ravlt=P_RAVLT(edad, sexo, nombre, apellido,registro)
+    parrafo=p_ravlt.redactar()
+
     return render_template(
-        "resumen.html", 
+        "resumen.html",
+        nombre=nombre,
+        apellido=apellido, 
         edad=edad, 
         sexo=sexo, 
         educacion=educacion,
@@ -262,7 +274,28 @@ def last_www():
         any_score=any_score,
         registro=registro,
         listaA=listaA,
-        mainM=registro["mainM"]
+        mainM=registro["mainM"],
+        parrafo=parrafo
+        )
+
+
+@app.route("/ravlt/reporte", methods=["GET","POST"])
+def ravlt_reporte_www():
+
+    save_last()
+
+    edad=int(session["edad"])
+    sexo=session["sexo"]
+    nombre=session["nombre"]
+    apellido=session["apellido"]
+    puntajes=session["puntajes"]
+
+    p_ravlt=P_RAVLT(edad, sexo, nombre, apellido,puntajes)
+    parrafo=p_ravlt.redactar()
+
+    return render_template(
+        "reporte.html", 
+        parrafo=parrafo
         )
 
 

@@ -1,3 +1,6 @@
-ax="Aj"
+dicc={
+    "A":1,
+    "B":2
+}
 
-print(ax)
+print(sum(dicc.values()))

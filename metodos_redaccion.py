@@ -1,7 +1,7 @@
 class Parrafo():
 	def __init__(self,edad,sexo,nombre,apellido):
 		self.edad=edad
-		if sexo==0:
+		if sexo=="0":
 			self.t_El="El paciente "
 			self.t_el="el paciente "
 			self.t_del="del paciente "
@@ -121,32 +121,42 @@ class Parrafo():
 		return out
 			
 class P_RAVLT(Parrafo):
-	def __init__(self,edad,sexo,nombre,apellido,t1,reci,prim,curva,inm,tb,t6,dif,dif_r,rec,rec_r,repe,conf):
+	def __init__(self,edad,sexo,nombre,apellido,puntajes):
 		super().__init__(edad,sexo,nombre,apellido)
-		self.t1=t1
-		self.t1_valores=self.valores_z(t1)
-		self.reci=reci
-		self.prim=prim
+		self.t1=puntajes["z_scores"]["t1"]
+		self.t1_valores=self.valores_z(self.t1)
+		if puntajes["mainM"][0]!=None and puntajes["mainM"][0][14]>=1:
+			self.reci=True
+		else:
+			self.reci=False 
+		if puntajes["mainM"][0]!=None and puntajes["mainM"][0][0]>=1:
+			self.prim=True
+		else:
+			self.prim=False 
+		curva=[]
+		for x in range(1,6):
+			x="t"+str(x)
+			curva.append(puntajes["raw_scores"][x])
 		self.curva=curva
-		self.inm=inm
-		self.tb=tb
-		self.tb_valores=self.valores_z(tb)
-		self.t6=t6
-		self.dif=dif
-		self.dif_r=dif_r
-		self.dif_valores=self.valores_z(dif)
-		self.max=max(curva)
-		self.rec=rec
-		self.rec_r=rec_r
-		self.rec_valores=self.valores_z(rec)
-		self.repe=repe
-		self.conf=conf
+		self.inm=puntajes["z_scores"]["total_inmediato"]
+		self.tb=puntajes["z_scores"]["tB"]
+		self.tb_valores=self.valores_z(self.tb)
+		self.t6=puntajes["raw_scores"]["t6"]
+		self.dif=puntajes["z_scores"]["t7"]
+		self.dif_r=puntajes["raw_scores"]["tB"]
+		self.dif_valores=self.valores_z(self.dif)
+		self.max=max(self.curva)
+		self.rec=puntajes["z_scores"]["t8"]
+		self.rec_r=puntajes["raw_scores"]["t8"]
+		self.rec_valores=self.valores_z(self.rec)
+		self.repe=sum(puntajes["repeticiones"].values())
+		self.conf=sum(puntajes["confab"].values())
 		
-		if reci==True and prim==True:
+		if self.reci==True and self.prim==True:
 			self.int_recprim="Presentó un efecto de primacía y de recencia, logrando evocar las palabras iniciales y finales de la lista"
-		elif reci==False and prim==True:
+		elif self.reci==False and self.prim==True:
 			self.int_recprim="Presentó un efecto de primacía aunque no así de recencia, sin lograr evocar las palabras finales de la lista"
-		elif reci==True and prim==False:
+		elif self.reci==True and self.prim==False:
 			self.int_recprim="Presentó un efecto de recencia aunque no así de primacía, sin lograr evocar las palabras iniciales de la lista"
 		else:
 			self.int_recprim="No presentó un efecto de primacía ni de recencia, sin lograr evocar las palabras iniciales y finales de la lista"
@@ -198,14 +208,10 @@ class P_RAVLT(Parrafo):
 		elif self.repe<5 and self.conf>5:
 			self.t_repconf="Cabe destacar que se observó una gran cantidad de confabulaciones a lo largo de la prueba."
 		else:
-			self.repconf=""
+			self.t_repconf=""
 			
 	def redactar(self):
 		out=f'''{self.t_El}presentó valores {self.t1_valores}en el recuerdo de una lista de 15 palabras. {self.int_recprim}. Con la exposición repetida al material {self.t_el}{self.apren}{self.sal_curva}presentando una curva de aprendizaje {self.int_curva}. Su performance en el aprendizaje de una lista distractora presentó valores {self.tb_valores}{self.pro}{self.retro}. En cuanto a la habilidad del paciente para evocar a largo plazo la información inicialmente presentada, presentó valores {self.dif_valores}, logrando evocar {self.dif_r} de las{self.t_max} palabras inicialmente aprendidas. En la fase de reconocimiento {self.t_el}obtuvo valores {self.rec_valores}, {self.benef}, {self.sal_benef}recuperando {self.rec_r} de las 15 palabras inicialmente presentadas. {self.t_repconf}'''
 		out=out.replace(" . ",". ").replace(" , ",", ")
 		return out
 		
-
-p=P_RAVLT(30,0,'Daniel','Sanchez',-2.5,False,False,[1,2,3,4,5],-1.5,0.5,3,1.5,12,-3,13,10,15)
-
-print(p.redactar())

@@ -1,11 +1,13 @@
 Próximos pasos
 
 -Incluir los composite scores
--Función de redacción de informe
 -mostrar normas en una página aparte
+-mostrar la lista B cuando es ese trial
+-eliminar last como pagina visible, solo se conserva como paso en el procesamiento
 
 
 ERRORES
+si no se completan los trials el reporte se convierte en un error porque le faltan datos. 
 
 
 #estructura de los datos: norms[SNE][medida][sexo][edad]

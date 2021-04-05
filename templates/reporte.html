@@ -23,29 +23,7 @@
       </div>
     </div>
 
-    {% if timeUp != None%}
-    {{timeUp_m(trial_num)}}
-    {% endif %}
-
-    <div>
-      <a class="btn btn-success" href="/trial/t1" role="button">Iniciar</a>
-      <a class="btn btn-success" href="/trial/t7" role="button">Evocación</a>
-    </div>
-    
-
-    {% if any_score %}
-    {{scores(raw_scores, z_scores)}}
-    {% endif %}
-
-    {% if any_score %}
-    {{ mas_info(registro) }}
-    {% endif %}
-
-    {{targets_chart(listaA,mainM)}}
-
-    
     {{ ravlt_parrafo(parrafo) }}
-
 
     <div>
       <a class="btn btn-primary" href="/resumen" role="button">Resumen</a>
