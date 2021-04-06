@@ -266,6 +266,21 @@
 </table>
 {%- endmacro %}
 
+{% macro table_listaB(listaB) %}
+<div>
+  <table>
+    <tr>
+      <th>Lista B</th>
+    </tr>
+    {% for x in range(0,15) %}
+  <tr>
+    <td>{{listaB[x]}}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</div>
+{%- endmacro %}
+
 {% macro ravlt_parrafo(parrafo) %}
 <div>
   <h2>Reporte</h2>

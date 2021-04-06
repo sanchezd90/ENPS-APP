@@ -229,6 +229,7 @@ def t_www(trial_name):
         any_score=any_score,
         registro=registro,
         listaA=listaA,
+        listaB=listaB,
         mainM=registro["mainM"],
         answer=answer,
         checkbox_list=checkbox_list
