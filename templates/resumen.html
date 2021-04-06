@@ -23,8 +23,12 @@
       </div>
     </div>
 
-    {% if timeUp != None%}
-    {{timeUp_m(trial_num)}}
+    {% if registro["raw_scores"]["t8"]!=None %}
+      {{ ravlt_parrafo(parrafo) }}
+    {% else %}
+      {% if timeUp != None%}
+        {{timeUp_m(trial_num)}}
+      {% endif %}
     {% endif %}
 
     <div>
@@ -43,8 +47,6 @@
 
     {{targets_chart(listaA,mainM)}}
 
-    
-    {{ ravlt_parrafo(parrafo) }}
 
 
     <div>
