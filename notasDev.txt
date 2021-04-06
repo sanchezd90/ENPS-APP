@@ -4,6 +4,15 @@ Próximos pasos
 -mostrar normas en una página aparte
 -permitir reporte parcial
 
+version extendida
+-modificar contenido documentos evsApp
+--codigoprueba para BD: dni+stampt+prueba
+--agregar datos configuracion
+-crear nueva coleccion eventosAPP
+--tiene fecha,datos pac, datos ev, listado de pruebas admin (usando codigoprueba)
+-modificar contenido normas
+--agregar espeificaciones
+
 
 ERRORES
 

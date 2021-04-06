@@ -30,7 +30,63 @@ trialnames={
     7:"t7",
     8:"t8",
     }
- 
+
+#
+@app.route("/enps", methods=["GET","POST"])
+def enps_www():
+    return render_template("enps.html")
+
+#
+@app.route("/enps/create", methods=["GET","POST"])
+def create_www():
+    return render_template("create.html")
+
+#
+@app.route("/enps/create/set", methods=["GET","POST"])
+def enps_set_www():
+    if request.method == "POST":
+        nombre=request.form["nombre"]
+        apellido=request.form["apellido"]
+        dni=request.form["dni"]
+        edad=request.form["edad"]
+        educacion=request.form["educacion"]
+        sexo=request.form["sexo"]
+        codigo_evento=round(datetime.datetime.now().timestamp())
+        session["cod_evento"]=codigo_evento
+        insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo_evento)
+        return redirect(url_for("evento_www"))
+    else:
+        return redirect(url_for("create_www"))
+
+#
+@app.route("/enps/recover", methods=["GET","POST"])
+def recover_www():
+    all_events=get_all_events()
+    return render_template("recover.html",eventos=all_events)
+
+#
+@app.route("/enps/evento", methods=["GET","POST"])
+def evento_www():
+    codigo_evento=session["cod_evento"]
+    datos_evento=get_event(codigo_evento)
+    nombre=datos_evento["nombre"]
+    apellido=datos_evento["apellido"]
+    dni=datos_evento["dni"]
+    edad=datos_evento["edad"]
+    educacion=datos_evento["educacion"]
+    sexo=datos_evento["sexo"]
+    codigo=datos_evento["codigo"]
+    pruebas_admin=datos_evento["pruebas_admin"]
+    return render_template(
+        "evento.html",
+        nombre=nombre, 
+        apellido=apellido, 
+        dni=dni, 
+        edad=edad, 
+        educacion=educacion, 
+        sexo=sexo, 
+        pruebas=pruebas_admin
+        )
 
 #home para cargar los datos iniciales
 @app.route("/", methods=["GET","POST"])

@@ -27,7 +27,33 @@ def get_data(codigo,key):
     q=mycol.find(myquery,field)
     return q[0]
 
+def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo):
+    col=db["eventosApp"]
+    datos={
+        "nombre":nombre,
+        "apellido":apellido,
+        "dni":dni,
+        "edad":edad,
+        "educacion":educacion,
+        "sexo":sexo,
+        "codigo":codigo,
+        "pruebas_admin":None
+        }
+    doc=datos
+    return col.insert_one(doc)
 
+def get_event(codigo):
+    mycol=db["eventosApp"]
+    myquery = { "codigo": codigo }
+    q=mycol.find(myquery)
+    return q[0]
 
+def get_all_events():
+    mycol=db["eventosApp"]
+    out=[]
+    for x in mycol.find({}):
+        out.append(x)
+    return out
 
+print(get_all_events())
 
