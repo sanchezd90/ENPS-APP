@@ -211,7 +211,15 @@ class P_RAVLT(Parrafo):
 			self.t_repconf=""
 			
 	def redactar(self):
-		out=f'''{self.t_El}presentó valores {self.t1_valores}en el recuerdo de una lista de 15 palabras. {self.int_recprim}. Con la exposición repetida al material {self.t_el}{self.apren}{self.sal_curva}presentando una curva de aprendizaje {self.int_curva}. Su performance en el aprendizaje de una lista distractora presentó valores {self.tb_valores}{self.pro}{self.retro}. En cuanto a la habilidad del paciente para evocar a largo plazo la información inicialmente presentada, presentó valores {self.dif_valores}, logrando evocar {self.dif_r} de las{self.t_max} palabras inicialmente aprendidas. En la fase de reconocimiento {self.t_el}obtuvo valores {self.rec_valores}, {self.benef}, {self.sal_benef}recuperando {self.rec_r} de las 15 palabras inicialmente presentadas. {self.t_repconf}'''
+		f1=f"""{self.t_El}presentó valores {self.t1_valores}en el recuerdo de una lista de 15 palabras. """
+		f2=f"""{self.int_recprim}. """
+		f3=f"""Con la exposición repetida al material {self.t_el}{self.apren}{self.sal_curva}presentando una curva de aprendizaje {self.int_curva}. """
+		f4=f"""Su performance en el aprendizaje de una lista distractora presentó valores {self.tb_valores}"""
+		f5=f"""{self.pro}"""
+		f6=f"""{self.retro}"""
+		f7=f""". En cuanto a la habilidad del paciente para evocar a largo plazo la información inicialmente presentada, presentó valores {self.dif_valores}, logrando evocar {self.dif_r} de las{self.t_max} palabras inicialmente aprendidas. """
+		f8=f"""En la fase de reconocimiento {self.t_el}obtuvo valores {self.rec_valores}, {self.benef}, {self.sal_benef}recuperando {self.rec_r} de las 15 palabras inicialmente presentadas. {self.t_repconf}"""
+		out=f1+f2+f3+f4+f5+f6+f7+f8
 		out=out.replace(" . ",". ").replace(" , ",", ")
 		return out
 		
