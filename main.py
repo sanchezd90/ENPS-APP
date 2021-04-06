@@ -250,34 +250,7 @@ def last_www():
     normas_sujeto=session["normas_sujeto"]
     registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
-    timeUp_str=session["timeUp_str"]
-
-    raw_scores=session["puntajes"]["raw_scores"]
-    z_scores=session["puntajes"]["z_scores"]
-    any_score=any(raw_scores.values())
-
-    registro=session["puntajes"]
-
-    p_ravlt=P_RAVLT(edad, sexo, nombre, apellido,registro)
-    parrafo=p_ravlt.redactar()
-
-    return render_template(
-        "resumen.html",
-        nombre=nombre,
-        apellido=apellido, 
-        edad=edad, 
-        sexo=sexo, 
-        educacion=educacion,
-        trial_num=trial_num,
-        timeUp=timeUp_str,
-        raw_scores=raw_scores,
-        z_scores=z_scores,
-        any_score=any_score,
-        registro=registro,
-        listaA=listaA,
-        mainM=registro["mainM"],
-        parrafo=parrafo
-        )
+    return redirect(url_for("resumen_www"))
 
 
 @app.route("/ravlt/reporte", methods=["GET","POST"])
@@ -305,8 +278,10 @@ def resumen_www():
     
     save_last()    
     
-    edad=session["edad"]
+    edad=int(session["edad"])
     sexo=session["sexo"]
+    nombre=session["nombre"]
+    apellido=session["apellido"]
     educacion=session["educacion"]
     trial_num=session["current_trial"]
     listaA=session["listaA"]
@@ -322,8 +297,16 @@ def resumen_www():
 
     registro=session["puntajes"]
 
+    try:
+        p_ravlt=P_RAVLT(edad, sexo, nombre, apellido, registro)
+        parrafo=p_ravlt.redactar()
+    except:
+        parrafo=""
+
     return render_template(
-        "resumen.html", 
+        "resumen.html",
+        nombre=nombre,
+        apellido=apellido, 
         edad=edad, 
         sexo=sexo, 
         educacion=educacion,
@@ -334,7 +317,8 @@ def resumen_www():
         any_score=any_score,
         registro=registro,
         listaA=listaA,
-        mainM=registro["mainM"]
+        mainM=registro["mainM"],
+        parrafo=parrafo
         )
 
 
