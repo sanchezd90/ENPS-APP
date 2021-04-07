@@ -85,6 +85,7 @@ def evento_www():
     codigo=datos_evento["codigo"]
     fecha=datos_evento["fecha"]
     pruebas_admin=datos_evento["pruebas_admin"]
+    pruebas_disponibles=get_pruebas_disp()
     return render_template(
         "evento.html",
         nombre=nombre, 
@@ -94,16 +95,17 @@ def evento_www():
         educacion=educacion, 
         sexo=sexo,
         fecha=fecha, 
-        pruebas=pruebas_admin
+        pruebas=pruebas_admin,
+        lista_pruebas_disp=pruebas_disponibles
         )
 
 #home para cargar los datos iniciales
-@app.route("/", methods=["GET","POST"])
-def config_www():
+@app.route("/enps/ravlt/config", methods=["GET","POST"])
+def ravlt_config_www():
     return render_template("config.html")
 
-@app.route("/set", methods=["GET","POST"])
-def set_www():
+@app.route("/enps/ravlt/set", methods=["GET","POST"])
+def ravlt_set_www():
     if request.method == "POST":
         session["nombre"]=request.form["nombre"]
         session["apellido"]=request.form["apellido"]
@@ -227,12 +229,12 @@ def set_www():
         dicc_session["codigo"]=codigo_ev
         insert_doc(dicc_session)
 
-        return redirect(url_for("resumen_www"))
+        return redirect(url_for("ravlt_www"))
     else:
-        return redirect(url_for("config_www"))
+        return redirect(url_for("ravlt_config_www"))
 
-@app.route("/trial/<string:trial_name>", methods=["GET","POST"])
-def t_www(trial_name):
+@app.route("/enps/ravlt/trial/<string:trial_name>", methods=["GET","POST"])
+def ravlt_t_www(trial_name):
 
     save_last()
 
@@ -283,7 +285,7 @@ def t_www(trial_name):
         checkbox_list=[]
 
     return render_template(
-        "trial.html", 
+        "ravlt_trial.html", 
         short_name=short_name, 
         next_name=next_name,
         lista_rec=session["listaRec"],
@@ -300,8 +302,8 @@ def t_www(trial_name):
         checkbox_list=checkbox_list
         )
 
-@app.route("/last", methods=["GET","POST"])
-def last_www():
+@app.route("/enps/ravlt/last", methods=["GET","POST"])
+def ravlt_last_www():
     
     edad=int(session["edad"])
     sexo=session["sexo"]
@@ -315,31 +317,12 @@ def last_www():
     normas_sujeto=session["normas_sujeto"]
     registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
-    return redirect(url_for("resumen_www"))
+    return redirect(url_for("ravlt_www"))
 
 
-@app.route("/ravlt/reporte", methods=["GET","POST"])
-def ravlt_reporte_www():
 
-    save_last()
-
-    edad=int(session["edad"])
-    sexo=session["sexo"]
-    nombre=session["nombre"]
-    apellido=session["apellido"]
-    puntajes=session["puntajes"]
-
-    p_ravlt=P_RAVLT(edad, sexo, nombre, apellido,puntajes)
-    parrafo=p_ravlt.redactar()
-
-    return render_template(
-        "reporte.html", 
-        parrafo=parrafo
-        )
-
-
-@app.route("/resumen", methods=["GET","POST"])
-def resumen_www():
+@app.route("/enps/ravlt", methods=["GET","POST"])
+def ravlt_www():
     
     save_last()    
     
@@ -369,7 +352,7 @@ def resumen_www():
         parrafo=""
 
     return render_template(
-        "resumen.html",
+        "ravlt.html",
         nombre=nombre,
         apellido=apellido, 
         edad=edad, 

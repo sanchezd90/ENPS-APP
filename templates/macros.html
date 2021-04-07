@@ -93,7 +93,7 @@
 
 {% macro t_input(answer) -%}
 <div>
-  <form action="/trial/{{next_name}}" method="POST">
+  <form action="/enps/ravlt/trial/{{next_name}}" method="POST">
     <div>
       <textarea name="respuesta" class="col-sm-3">{{answer}}</textarea>
     </div>
@@ -107,7 +107,7 @@
 {% macro checkbox(lista_rec,checkbox_list) -%}
 <div>
   <div>
-    <form action="/last" method="POST">
+    <form action="/enps/ravlt/last" method="POST">
       <table>
         {%- for row in lista_rec|batch(10, '&nbsp;') %}
           <tr>
@@ -132,19 +132,19 @@
 {% macro links_trials() %}
 <div>
   <div>
-    <a class="btn btn-primary" href="/trial/t1" role="button">T1</a>
-    <a class="btn btn-primary" href="/trial/t2" role="button">T2</a>
-    <a class="btn btn-primary" href="/trial/t3" role="button">T3</a>    
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t1" role="button">T1</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t2" role="button">T2</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t3" role="button">T3</a>    
   </div>
   <div>
-    <a class="btn btn-primary" href="/trial/t4" role="button">T4</a>
-    <a class="btn btn-primary" href="/trial/t5" role="button">T5</a>
-    <a class="btn btn-primary" href="/trial/tB" role="button">TB</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t4" role="button">T4</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t5" role="button">T5</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/tB" role="button">TB</a>
   </div>
   <div>
-    <a class="btn btn-primary" href="/trial/t6" role="button">T6</a>
-    <a class="btn btn-primary" href="/trial/t7" role="button">Dif</a>
-    <a class="btn btn-primary" href="/trial/t8" role="button">Rec</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t6" role="button">T6</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t7" role="button">Dif</a>
+    <a class="btn btn-primary" href="/enps/ravlt/trial/t8" role="button">Rec</a>
   </div>
 </div>
 
@@ -175,7 +175,7 @@
       {% if raw_scores[x] != None%}
       <tr>
         {% if x != "total_inmediato"%}
-        <th scope="row"><a href="/trial/{{x}}">{{x | replace("t7","Diferido") | replace("t8","Reconocimiento") | replace("total_inmediato","Trials 1-5") | replace("tB","Lista B")}}</a></th>
+        <th scope="row"><a href="/enps/ravlt/trial/{{x}}">{{x | replace("t7","Diferido") | replace("t8","Reconocimiento") | replace("total_inmediato","Trials 1-5") | replace("tB","Lista B")}}</a></th>
         {% else %}
         <th scope="row">{{x | replace("t7","Diferido") | replace("t8","Reconocimiento") | replace("total_inmediato","Trials 1-5") | replace("tB","Lista B")}}</th>
         {% endif %}
@@ -291,8 +291,8 @@
 {% macro pruebas_disp(lista_pruebas_disp) %}
 <div>
   <h2>Pruebas disponibles</h2>
-  {% for x in lista_prueba_disp% }
-  <a class="btn btn-outline-primary" href="/enps/{{x}}" role="button">{{x}}</a>
+  {% for x in lista_pruebas_disp %}
+  <a class="btn btn-outline-primary" href="/enps/{{x | lower()}}" role="button">{{x}}</a>
   {% endfor %}
 </div>
 {%- endmacro %}

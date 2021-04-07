@@ -56,4 +56,8 @@ def get_all_events():
         out.append(x)
     return out
 
-
+def get_pruebas_disp():
+    mycol=db["appData"]
+    q=mycol.find({},{"_id":0, "pruebas_disponibles":1})
+    q=q[0]["pruebas_disponibles"]
+    return q
