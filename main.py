@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, Response, 
 from metodos_ravlt import *
 from metodos_db import *
 from metodos_redaccion import *
+from metodos_app import *
 
 import datetime
 
@@ -86,6 +87,10 @@ def evento_www():
     codigo=datos_evento["cod_evento"]
     fecha=datos_evento["fecha"]
     pruebas_admin=datos_evento["pruebas_admin"]
+    dic_pruebas_admin={}
+    for x in pruebas_admin:
+        key=prueba_from_cod(x)
+        dic_pruebas_admin[key]=x
     pruebas_disponibles=get_pruebas_disp()
     session["nombre"]=nombre
     session["apellido"]=apellido
@@ -103,7 +108,8 @@ def evento_www():
         sexo=sexo,
         fecha=fecha, 
         pruebas=pruebas_admin,
-        lista_pruebas_disp=pruebas_disponibles
+        lista_pruebas_disp=pruebas_disponibles,
+        dic_pruebas_admin=dic_pruebas_admin
         )
 
 #home para cargar los datos iniciales
@@ -229,10 +235,46 @@ def ravlt_set_www():
         session["cod_prueba"]=codigo_prueba
         dicc_session["cod_prueba"]=codigo_prueba
         insert_doc(dicc_session)
+        relacionar(codigo_evento, codigo_prueba)
 
         return redirect(url_for("ravlt_www"))
     else:
         return redirect(url_for("ravlt_config_www"))
+
+@app.route("/enps/ravlt/recover/<cod_prueba>", methods=["GET","POST"])
+def ravlt_recover_www(cod_prueba):
+    datos_prueba=get_prueba(cod_prueba)
+
+    #define qué lista se va a usar entre principal o alternativa
+    session["listaA"]=datos_prueba["listaA"]
+    session["listaB"]=datos_prueba["listaB"]
+    session["listaRec"]=datos_prueba["listaRec"]
+    #se inician los diccionarios de sesión para almacenar los puntajes
+    #targets, intrusiones, confab y repeticiones parten de 0. 
+    #las matrices parten con una entrada por trial con valor None
+    #raw_scores parten de 0
+    #z_scores parten de con valor None
+    session["puntajes"]=datos_prueba["puntajes"]
+
+    #get normas trae las normas del sujeto
+    session["normas_sujeto"]=datos_prueba["normas_sujeto"]
+    
+    #current_trial es un registro para definir qué trial ya fue completado. El trial como número según la definición inicial de trialnames (linea 14)
+    session["current_trial"]=datos_prueba["current_trial"]
+    
+    #input es un registro para las palabras que se ingresan por trial. Se sobreescribe en cada ejecución del trial
+    session["input"]=datos_prueba["input"]
+
+    session["delayed_time"]=datos_prueba["delayed_time"]
+    session["timeUp_str"]=datos_prueba["timeUp_str"]
+
+    dicc_session=dict(session)
+    codigo_evento=datos_prueba["cod_evento"]
+    codigo_prueba=datos_prueba["cod_prueba"]
+    session["cod_prueba"]=codigo_prueba
+    dicc_session["cod_prueba"]=codigo_prueba
+
+    return redirect(url_for("ravlt_www"))
 
 @app.route("/enps/ravlt/trial/<string:trial_name>", methods=["GET","POST"])
 def ravlt_t_www(trial_name):

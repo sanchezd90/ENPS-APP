@@ -16,7 +16,7 @@
 
     <div>
       {% for x in eventos %}
-      <a class="btn btn-success" href="/enps/recover/{{x['codigo']}}" role="button">{{x['apellido']}}, {{x['nombre']}} ({{x['fecha']}})</a>
+      <a class="btn btn-success" href="/enps/recover/{{x['cod_evento']}}" role="button">{{x['apellido']}}, {{x['nombre']}} ({{x['fecha']}})</a>
       {% endfor %}
     </div>
 

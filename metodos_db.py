@@ -27,6 +27,12 @@ def get_data(codigo,key):
     q=mycol.find(myquery,field)
     return q[0]
 
+def get_prueba(codigo):
+    mycol=db["evsApp"]
+    myquery = { "cod_prueba": codigo }
+    q=mycol.find(myquery)
+    return q[0]
+
 def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha):
     col=db["eventosApp"]
     datos={
@@ -61,3 +67,15 @@ def get_pruebas_disp():
     q=mycol.find({},{"_id":0, "pruebas_disponibles":1})
     q=q[0]["pruebas_disponibles"]
     return q
+
+def relacionar(cod_evento,cod_prueba):
+    eventos=db["eventosApp"]
+    q=eventos.find({ "cod_evento": cod_evento },{"_id":0, "pruebas_admin":1})
+    pruebas_admin=q[0]["pruebas_admin"]
+
+    if pruebas_admin==None:
+        pruebas_admin=[]
+
+    pruebas_admin.append(cod_prueba)
+    newvalues={ "$set": { "pruebas_admin": pruebas_admin } }
+    eventos.update_one({ "cod_evento": cod_evento }, newvalues)
