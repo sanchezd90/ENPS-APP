@@ -33,6 +33,11 @@ trialnames={
     }
 
 #
+@app.route("/")
+def inicio_www():
+    return redirect(url_for("enps_www"))
+
+#
 @app.route("/enps", methods=["GET","POST"])
 def enps_www():
     return render_template("enps.html")
@@ -231,6 +236,7 @@ def ravlt_set_www():
 
         dicc_session=dict(session)
         codigo_evento=session["cod_evento"]
+        session["cod_evento"]=codigo_evento
         codigo_prueba=codigo_evento+"_ravlt"
         session["cod_prueba"]=codigo_prueba
         dicc_session["cod_prueba"]=codigo_prueba
@@ -270,6 +276,7 @@ def ravlt_recover_www(cod_prueba):
 
     dicc_session=dict(session)
     codigo_evento=datos_prueba["cod_evento"]
+    session["cod_evento"]=codigo_evento
     codigo_prueba=datos_prueba["cod_prueba"]
     session["cod_prueba"]=codigo_prueba
     dicc_session["cod_prueba"]=codigo_prueba
@@ -409,7 +416,8 @@ def ravlt_www():
         registro=registro,
         listaA=listaA,
         mainM=registro["mainM"],
-        parrafo=parrafo
+        parrafo=parrafo,
+        cod_evento=session["cod_evento"]
         )
 
 
