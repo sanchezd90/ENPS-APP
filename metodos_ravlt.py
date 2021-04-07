@@ -279,12 +279,12 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
             timeUp=str(dead.hour)+":"+minute
             session["timeUp_str"]=timeUp
 
-        codigo=session["codigo"]
+        codigo=session["cod_prueba"]
         datos=session["puntajes"]
         update_doc(codigo,datos)
 
 def save_last():
-    codigo=session["codigo"]
+    codigo=session["cod_prueba"]
     t8_raw=get_data(codigo,"puntajes.raw_scores.t8")
     t8_raw=t8_raw["puntajes"]["raw_scores"]["t8"]
     if t8_raw != None:

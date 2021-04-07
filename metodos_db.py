@@ -16,13 +16,13 @@ def insert_doc(datos):
 
 def update_doc(codigo,datos):
     mycol=db["evsApp"]
-    myquery = { "codigo": codigo }
+    myquery = { "cod_prueba": codigo }
     newvalues={ "$set": { "puntajes": datos } }
     mycol.update_one(myquery, newvalues)
 
 def get_data(codigo,key):
     mycol=db["evsApp"]
-    myquery = { "codigo": codigo }
+    myquery = { "cod_prueba": codigo }
     field={"_id":0, key:1}
     q=mycol.find(myquery,field)
     return q[0]
@@ -36,7 +36,7 @@ def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha):
         "edad":edad,
         "educacion":educacion,
         "sexo":sexo,
-        "codigo":codigo,
+        "cod_evento":codigo,
         "fecha":fecha,
         "pruebas_admin":None
         }
@@ -45,7 +45,7 @@ def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha):
 
 def get_event(codigo):
     mycol=db["eventosApp"]
-    myquery = { "codigo": codigo }
+    myquery = { "cod_evento": codigo }
     q=mycol.find(myquery)
     return q[0]
 

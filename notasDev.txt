@@ -6,9 +6,10 @@ Próximos pasos
 
 version extendida
 -modificar contenido documentos evsApp
---codigoprueba para BD: dni+stampt+prueba
+--codigoprueba para BD: dni+fecha(ddmmaaaa)+prueba
 --agregar datos configuracion
--crear nueva coleccion eventosAPP
+-completar nueva coleccion eventosAPP
+--cambiar codigo evento por fecha(ddmmaaaa)
 --tiene fecha,datos pac, datos ev, listado de pruebas admin (usando codigoprueba)
 -modificar contenido normas
 --agregar espeificaciones

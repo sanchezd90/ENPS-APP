@@ -15,33 +15,6 @@
     <h1>Datos del paciente</h1>
 
     <form action="/enps/ravlt/set" method="POST">
-        <div class="mb-3">
-          <label for="dniInput" class="form-label">DNI</label>
-          <input type="text" class="form-control" name="dni" required>
-        </div>
-        <div class="mb-3">
-          <label for="nameInput" class="form-label">Nombre</label>
-          <input type="text" class="form-control" name="nombre" required>
-        </div>
-        <div class="mb-3">
-          <label for="apellidoInput" class="form-label">Apellido</label>
-          <input type="text" class="form-control" name="apellido" required>
-        </div>
-        <div class="mb-3">
-          <label for="ageInput" class="form-label">Edad</label>
-          <input type="number" class="form-control" name="edad" min="18" max="120" required>
-        </div>
-        <div class="mb-3">
-            <label for="educationInput" class="form-label">Años de educación</label>
-            <input type="number" class="form-control" name="educacion" min="0" max="30" required>
-          </div>
-        <div class="mb-3">
-            <label class="form-label">Sexo</label>
-            <select class="form-select" aria-label="sexo" name="sexo">
-                <option value="0">Masculino</option>
-                <option value="1">Femenino</option>
-            </select>
-        </div>
         <div>
           <label class="form-label">Lista</label>
           <select class="form-select" aria-label="lista" name="lista">

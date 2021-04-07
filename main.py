@@ -52,6 +52,7 @@ def enps_set_www():
         educacion=request.form["educacion"]
         sexo=request.form["sexo"]
         codigo_evento=round(datetime.datetime.now().timestamp())
+        codigo_evento=str(dni)+"_"+str(codigo_evento)
         session["cod_evento"]=codigo_evento
         fecha=datetime.datetime.now()
         fecha=fecha.strftime("%d/%m/%y")
@@ -68,7 +69,7 @@ def recover_www():
 
 @app.route("/enps/recover/<codigo>", methods=["GET","POST"])
 def recover_cod_www(codigo):
-    session["cod_evento"]=int(codigo)
+    session["cod_evento"]=codigo
     return redirect(url_for("evento_www"))
 
 #
@@ -82,10 +83,16 @@ def evento_www():
     edad=datos_evento["edad"]
     educacion=datos_evento["educacion"]
     sexo=datos_evento["sexo"]
-    codigo=datos_evento["codigo"]
+    codigo=datos_evento["cod_evento"]
     fecha=datos_evento["fecha"]
     pruebas_admin=datos_evento["pruebas_admin"]
     pruebas_disponibles=get_pruebas_disp()
+    session["nombre"]=nombre
+    session["apellido"]=apellido
+    session["dni"]=dni
+    session["edad"]=edad
+    session["educacion"]=educacion
+    session["sexo"]=sexo
     return render_template(
         "evento.html",
         nombre=nombre, 
@@ -102,17 +109,11 @@ def evento_www():
 #home para cargar los datos iniciales
 @app.route("/enps/ravlt/config", methods=["GET","POST"])
 def ravlt_config_www():
-    return render_template("config.html")
+    return render_template("ravlt_config.html")
 
 @app.route("/enps/ravlt/set", methods=["GET","POST"])
 def ravlt_set_www():
     if request.method == "POST":
-        session["nombre"]=request.form["nombre"]
-        session["apellido"]=request.form["apellido"]
-        session["dni"]=request.form["dni"]
-        session["edad"]=request.form["edad"]
-        session["educacion"]=request.form["educacion"]
-        session["sexo"]=request.form["sexo"]
         #define qué lista se va a usar entre principal o alternativa
         if request.form["lista"]=="0":
             session["listaA"]=lista1A
@@ -223,10 +224,10 @@ def ravlt_set_www():
         session["timeUp_str"]=None
 
         dicc_session=dict(session)
-        tstamp=round(datetime.datetime.now().timestamp())
-        codigo_ev=dicc_session["dni"]+"_"+str(tstamp)
-        session["codigo"]=codigo_ev
-        dicc_session["codigo"]=codigo_ev
+        codigo_evento=session["cod_evento"]
+        codigo_prueba=codigo_evento+"_ravlt"
+        session["cod_prueba"]=codigo_prueba
+        dicc_session["cod_prueba"]=codigo_prueba
         insert_doc(dicc_session)
 
         return redirect(url_for("ravlt_www"))
@@ -278,7 +279,7 @@ def ravlt_t_www(trial_name):
     
     registro=session["puntajes"]
 
-    codigo=session["codigo"]
+    codigo=session["cod_prueba"]
     checkbox_dict=get_data(codigo,"puntajes.respuestasM")
     checkbox_list=checkbox_dict["puntajes"]["respuestasM"][8]
     if checkbox_list==None:
