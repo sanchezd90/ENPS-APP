@@ -288,4 +288,11 @@
 </div>
 {%- endmacro %}
 
-
+{% macro pruebas_disp(lista_pruebas_disp) %}
+<div>
+  <h2>Pruebas disponibles</h2>
+  {% for x in lista_prueba_disp% }
+  <a class="btn btn-outline-primary" href="/enps/{{x}}" role="button">{{x}}</a>
+  {% endfor %}
+</div>
+{%- endmacro %}

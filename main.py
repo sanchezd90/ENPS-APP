@@ -53,7 +53,9 @@ def enps_set_www():
         sexo=request.form["sexo"]
         codigo_evento=round(datetime.datetime.now().timestamp())
         session["cod_evento"]=codigo_evento
-        insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo_evento)
+        fecha=datetime.datetime.now()
+        fecha=fecha.strftime("%d/%m/%y")
+        insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo_evento, fecha)
         return redirect(url_for("evento_www"))
     else:
         return redirect(url_for("create_www"))
@@ -63,6 +65,11 @@ def enps_set_www():
 def recover_www():
     all_events=get_all_events()
     return render_template("recover.html",eventos=all_events)
+
+@app.route("/enps/recover/<codigo>", methods=["GET","POST"])
+def recover_cod_www(codigo):
+    session["cod_evento"]=int(codigo)
+    return redirect(url_for("evento_www"))
 
 #
 @app.route("/enps/evento", methods=["GET","POST"])
@@ -76,6 +83,7 @@ def evento_www():
     educacion=datos_evento["educacion"]
     sexo=datos_evento["sexo"]
     codigo=datos_evento["codigo"]
+    fecha=datos_evento["fecha"]
     pruebas_admin=datos_evento["pruebas_admin"]
     return render_template(
         "evento.html",
@@ -84,7 +92,8 @@ def evento_www():
         dni=dni, 
         edad=edad, 
         educacion=educacion, 
-        sexo=sexo, 
+        sexo=sexo,
+        fecha=fecha, 
         pruebas=pruebas_admin
         )
 

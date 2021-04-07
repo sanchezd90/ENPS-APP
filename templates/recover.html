@@ -15,8 +15,13 @@
     <h1>Evaluaciones previas</h1>
 
     <div>
-      
+      {% for x in eventos %}
+      <a class="btn btn-success" href="/enps/recover/{{x['codigo']}}" role="button">{{x['apellido']}}, {{x['nombre']}} ({{x['fecha']}})</a>
+      {% endfor %}
     </div>
+
+    <a class="btn btn-outline-danger" href="/enps/create" role="button">Iniciar nueva evaluación</a>
+    <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
 
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

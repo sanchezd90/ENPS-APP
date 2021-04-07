@@ -27,7 +27,7 @@ def get_data(codigo,key):
     q=mycol.find(myquery,field)
     return q[0]
 
-def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo):
+def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha):
     col=db["eventosApp"]
     datos={
         "nombre":nombre,
@@ -37,6 +37,7 @@ def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo):
         "educacion":educacion,
         "sexo":sexo,
         "codigo":codigo,
+        "fecha":fecha,
         "pruebas_admin":None
         }
     doc=datos
@@ -55,5 +56,4 @@ def get_all_events():
         out.append(x)
     return out
 
-print(get_all_events())
 
