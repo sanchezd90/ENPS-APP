@@ -1,4 +1,4 @@
-{% from "macros.html" import pruebas_disp with context %}
+{% from "macros.html" import pruebas_disp, reportes with context %}
 
 <!doctype html>
 <html lang="es">
@@ -24,6 +24,12 @@
       </div>
     </div>
     {{pruebas_disp(lista_pruebas_disp,dic_pruebas_admin)}}
+    
+    {% if dic_reportes | length() > 0 %}
+    {{reportes(dic_reportes)}}
+    {% endif %}
+
+    <a class="btn btn-outline-danger" href="/enps" role="button">Salir de la evaluación</a>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

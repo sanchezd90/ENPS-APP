@@ -20,6 +20,18 @@ def update_doc(codigo,datos):
     newvalues={ "$set": { "puntajes": datos } }
     mycol.update_one(myquery, newvalues)
 
+def update_reportes(codigo,datos):
+    mycol=db["eventosApp"]
+    myquery = { "cod_evento": codigo }
+    newvalues={ "$set": { "reportes": datos } }
+    mycol.update_one(myquery, newvalues)
+
+def update_value(codigo,key,value):
+    mycol=db["evsApp"]
+    myquery = { "cod_prueba": codigo }
+    newvalues={ "$set": { key: value } }
+    mycol.update_one(myquery, newvalues)
+
 def get_data(codigo,key):
     mycol=db["evsApp"]
     myquery = { "cod_prueba": codigo }
@@ -44,7 +56,8 @@ def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha):
         "sexo":sexo,
         "cod_evento":codigo,
         "fecha":fecha,
-        "pruebas_admin":None
+        "pruebas_admin":None,
+        "reportes":{}
         }
     doc=datos
     return col.insert_one(doc)

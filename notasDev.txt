@@ -5,12 +5,6 @@ Próximos pasos
 -permitir reporte parcial
 
 version extendida
--modificar contenido documentos evsApp
---codigoprueba para BD: dni+fecha(ddmmaaaa)+prueba
---agregar datos configuracion
--completar nueva coleccion eventosAPP
---cambiar codigo evento por fecha(ddmmaaaa)
---tiene fecha,datos pac, datos ev, listado de pruebas admin (usando codigoprueba)
 -modificar contenido normas
 --agregar espeificaciones
 

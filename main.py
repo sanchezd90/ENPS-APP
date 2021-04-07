@@ -92,10 +92,16 @@ def evento_www():
     codigo=datos_evento["cod_evento"]
     fecha=datos_evento["fecha"]
     pruebas_admin=datos_evento["pruebas_admin"]
+    if pruebas_admin==None:
+        pruebas_admin=[]
     dic_pruebas_admin={}
+    reportes={}
     for x in pruebas_admin:
         key=prueba_from_cod(x)
         dic_pruebas_admin[key]=x
+        parrafo=get_data(x,"parrafo")
+        reportes[key]=parrafo["parrafo"]
+    update_reportes(codigo_evento, reportes)
     pruebas_disponibles=get_pruebas_disp()
     session["nombre"]=nombre
     session["apellido"]=apellido
@@ -114,7 +120,8 @@ def evento_www():
         fecha=fecha, 
         pruebas=pruebas_admin,
         lista_pruebas_disp=pruebas_disponibles,
-        dic_pruebas_admin=dic_pruebas_admin
+        dic_pruebas_admin=dic_pruebas_admin,
+        dic_reportes=reportes
         )
 
 #home para cargar los datos iniciales
@@ -240,6 +247,8 @@ def ravlt_set_www():
         codigo_prueba=codigo_evento+"_ravlt"
         session["cod_prueba"]=codigo_prueba
         dicc_session["cod_prueba"]=codigo_prueba
+        dicc_session["parrafo"]=""
+        dicc_session["prueba"]="ravlt"
         insert_doc(dicc_session)
         relacionar(codigo_evento, codigo_prueba)
 
@@ -280,6 +289,10 @@ def ravlt_recover_www(cod_prueba):
     codigo_prueba=datos_prueba["cod_prueba"]
     session["cod_prueba"]=codigo_prueba
     dicc_session["cod_prueba"]=codigo_prueba
+    parrafo=datos_prueba["parrafo"]
+    dicc_session["parrafo"]=parrafo
+    prueba=datos_prueba["prueba"]
+    dicc_session["prueba"]=prueba
 
     return redirect(url_for("ravlt_www"))
 
@@ -398,6 +411,7 @@ def ravlt_www():
     try:
         p_ravlt=P_RAVLT(edad, sexo, nombre, apellido, registro)
         parrafo=p_ravlt.redactar()
+        update_value(session["cod_prueba"], "parrafo", parrafo)
     except:
         parrafo=""
 

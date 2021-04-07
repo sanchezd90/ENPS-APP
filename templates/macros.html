@@ -300,3 +300,13 @@
     {% endfor %}
 </div>
 {%- endmacro %}
+
+{% macro reportes(dic_reportes) %}
+<div>
+  <h2>Reporte</h2>
+  {% for x in dic_reportes %}
+    <h5>{{x | upper()}}</h5>
+    <p>{{dic_reportes[x]}}</p>
+  {% endfor %}
+</div>
+{%- endmacro %}
