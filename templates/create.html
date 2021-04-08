@@ -8,12 +8,13 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <title>RAVLT</title>
+    <title>ENPS INECO</title>
   </head>
   <body>
+
     <h1>Datos del paciente y de la prueba</h1>
 
-    <form action="/set" method="POST">
+    <form action="/enps/create/set" method="POST">
         <div class="mb-3">
           <label for="dniInput" class="form-label">DNI</label>
           <input type="text" class="form-control" name="dni" required>
@@ -27,8 +28,8 @@
           <input type="text" class="form-control" name="apellido" required>
         </div>
         <div class="mb-3">
-          <label for="ageInput" class="form-label">Edad</label>
-          <input type="number" class="form-control" name="edad" min="18" max="120" required>
+          <label for="fechaNac">Fecha de nacimiento:</label>
+          <input type="date" id="fechaNac" name="fechaNac" required>
         </div>
         <div class="mb-3">
             <label for="educationInput" class="form-label">Años de educación</label>
@@ -41,21 +42,10 @@
                 <option value="1">Femenino</option>
             </select>
         </div>
-        <div>
-            <label class="form-label">Lista</label>
-            <select class="form-select" aria-label="lista" name="lista">
-                <option value="0">Principal (Tambor)</option>
-                <option value="1">Alternativa (Pasto)</option>
-            </select>
-        </div>
-        <div>
-            <label class="form-label">Normas</label>
-            <select class="form-select" aria-label="normas" name="normas">
-                <option value="Geffen(1995)">Geffen</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar</button>
+        <button type="submit" class="btn btn-primary">Nueva evaluación</button>
     </form>
+
+    <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

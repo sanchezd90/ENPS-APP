@@ -4,6 +4,10 @@ Próximos pasos
 -mostrar normas en una página aparte
 -permitir reporte parcial
 
+version extendida
+-modificar contenido normas
+--agregar especificaciones
+
 
 ERRORES
 
