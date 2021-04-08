@@ -10,28 +10,6 @@ import datetime
 app = Flask(__name__)
 app.secret_key="a2S3d4F"
 
-lista1A = ["tambor","cafe","tigre","caja","luna","primo","tiza","moda","pie","balde","pavo","color","planta","casa","rio"]
-lista1B = ["mesa","campo","torre","nube","vaso","luz","cañon","boca","tinta","sapo","firma","templo","lado","bote","pez"]
-lista2A = ["pasto","fuente","media","auto","papel","pais","tio","raton","cara","rosa","plato","jabon","niño","pera","libro"]
-lista2B = ["playa","foca","rey","piano","saco","globo","vino","tierra","gato","frio","leche","menta","barba","mano","cama"]
-#lista de 60 items
-rec1 = ("forma", "moda", "bala", "sol", "paz", "saco", "lado", "tipo", "rojo", "planta", "leon", "voto", "vaso", "flor", "copa", "rana", "baile", "cañon", "tigre", "torre", "mesa", "modo", "firma", "color", "pez", "boca", "pavo", "cajon", "nube", "dado", "lunes", "primo", "hogar", "balde", "nariz", "luz", "silla", "pava", "bote", "cinta", "pie", "caja", "barco", "pierna", "tinta", "tambor", "luna", "vale", "sapo", "te", "rio", "lluvia", "paso", "casa", "bombo", "campo", "tiza", "templo", "calor", "cafe")
-
-#lista de 50 items
-rec2 = ["raton", "fiesta", "rata", "barba", "region", "jamon", "niño", "medio", "saco", "chico", "sierra", "ruta", "vino", "media", "rey", "playa", "texto", "menta", "jabon", "cama", "tierra", "rosa", "cosa", "piano", "taco", "pais", "fruta", "plato", "globo", "playa", "mano", "pato", "cara", "auto", "lio", "rostro", "gato", "pasto", "papel", "frio", "puente", "libro", "pelo", "pera", "costa", "foca", "tio", "leche", "ley", "fuente"]
-
-trialnames={
-    0:"t1",
-    1:"t2",
-    2:"t3",
-    3:"t4",    
-    4:"t5",
-    5:"tB",
-    6:"t6",
-    7:"t7",
-    8:"t8",
-    }
-
 #
 @app.route("/")
 def inicio_www():
@@ -136,14 +114,16 @@ def ravlt_config_www():
 def ravlt_set_www():
     if request.method == "POST":
         #define qué lista se va a usar entre principal o alternativa
+        ravlt_data=get_appData("ravlt")
+        session["ravlt_tnames"]=ravlt_data["trialnames"]
         if request.form["lista"]=="0":
-            session["listaA"]=lista1A
-            session["listaB"]=lista1B
-            session["listaRec"]=rec1
+            session["listaA"]=ravlt_data["lista1A"]
+            session["listaB"]=ravlt_data["lista1B"]
+            session["listaRec"]=ravlt_data["rec1"]
         else:
-            session["listaA"]=lista2A
-            session["listaB"]=lista2B
-            session["listaRec"]=rec2
+            session["listaA"]=ravlt_data["lista2A"]
+            session["listaB"]=ravlt_data["lista2B"]
+            session["listaRec"]=ravlt_data["rec2"]
         #define qué normas se va a usar y las trae de mongoDB
         normas_name=request.form["normas"]
         normas=get_norms("RAVLT",normas_name)
@@ -303,16 +283,16 @@ def ravlt_recover_www(cod_prueba):
 def ravlt_t_www(trial_name):
 
     save_last()
-
+    trialnames=session["ravlt_tnames"]
     #recibe (trial_name) y define el número de trial (trial_num) y cuál será el próximo trial con el que continúa
     short_name=trial_name[1]
     for k,v in trialnames.items():
         if v==trial_name:
-            trial_num=k
+            trial_num=int(k)
     session["current_trial"]=trial_num
     next_num=int(trial_num)+1
     if trial_num<8:
-        next_name=trialnames[next_num]
+        next_name=trialnames[str(next_num)]
     else:
         next_name=None
 

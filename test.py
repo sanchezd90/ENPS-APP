@@ -1,3 +1,3 @@
-ax={"a":1,"b":2}
+from metodos_db import*
 
-print(len(ax))
+print(get_appData("ravlt"))

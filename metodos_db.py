@@ -82,6 +82,12 @@ def get_pruebas_disp():
     q=q[0]["pruebas_disponibles"]
     return q
 
+def get_appData(prueba):
+    mycol=db["appData"]
+    q=mycol.find({},{"_id":0, prueba:1})
+    q=q[0][prueba]
+    return q
+
 def relacionar(cod_evento,cod_prueba):
     eventos=db["eventosApp"]
     q=eventos.find({ "cod_evento": cod_evento },{"_id":0, "pruebas_admin":1})
