@@ -288,12 +288,12 @@
 </div>
 {%- endmacro %}
 
-{% macro pruebas_disp(lista_pruebas_disp,dic_pruebas_admin) %}
+{% macro pruebas_disp(lista_pruebas_disp,dic_pruebas_admin,nombres_pruebas) %}
 <div>
   <h2>Pruebas disponibles</h2>
   {% for x in lista_pruebas_disp %}
     {% if x is in dic_pruebas_admin %}
-    <a class="btn btn-success" href="/enps/ravlt/recover/{{dic_pruebas_admin[x]}}" role="button">{{x}}</a>
+    <a class="btn btn-success" href="/enps/ravlt/recover/{{dic_pruebas_admin[x]}}" role="button">{{nombres_pruebas[x]}}</a>
     {% else %}
     <a class="btn btn-outline-primary" href="/enps/{{x}}/config" role="button">{{x}}</a>
     {% endif %}
@@ -301,11 +301,11 @@
 </div>
 {%- endmacro %}
 
-{% macro reportes(dic_reportes) %}
+{% macro reportes(dic_reportes,nombres_pruebas) %}
 <div>
   <h2>Reporte</h2>
   {% for x in dic_reportes %}
-    <h5>{{x | upper()}}</h5>
+    <h5>{{nombres_pruebas[x]}}</h5>
     <p>{{dic_reportes[x]}}</p>
   {% endfor %}
 </div>

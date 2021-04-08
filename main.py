@@ -82,6 +82,7 @@ def evento_www():
         reportes[key]=parrafo["parrafo"]
     update_reportes(codigo_evento, reportes)
     pruebas_disponibles=get_pruebas_disp()
+    nombres_pruebas=get_test_names()
     session["nombre"]=nombre
     session["apellido"]=apellido
     session["dni"]=dni
@@ -101,7 +102,8 @@ def evento_www():
         pruebas=pruebas_admin,
         lista_pruebas_disp=pruebas_disponibles,
         dic_pruebas_admin=dic_pruebas_admin,
-        dic_reportes=reportes
+        dic_reportes=reportes,
+        nombres_pruebas=nombres_pruebas
         )
 
 #home para cargar los datos iniciales

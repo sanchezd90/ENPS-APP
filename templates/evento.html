@@ -24,10 +24,10 @@
         <p class="card-text"><strong>Educacion:</strong> {{educacion}}</p>
       </div>
     </div>
-    {{pruebas_disp(lista_pruebas_disp,dic_pruebas_admin)}}
+    {{pruebas_disp(lista_pruebas_disp,dic_pruebas_admin, nombres_pruebas)}}
     
     {% if dic_reportes | length() > 0 %}
-    {{reportes(dic_reportes)}}
+    {{reportes(dic_reportes,nombres_pruebas)}}
     {% endif %}
 
     <a class="btn btn-outline-danger" href="/enps" role="button">Salir de la evaluación</a>

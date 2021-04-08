@@ -45,6 +45,14 @@ def get_prueba(codigo):
     q=mycol.find(myquery)
     return q[0]
 
+def get_test_names():
+    mycol=db["appData"]
+    myquery = {}
+    field={"_id":0, "nombres_pruebas":1}
+    q=mycol.find(myquery,field)
+    q=q[0]["nombres_pruebas"]
+    return q
+
 def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha, fechaNac):
     col=db["eventosApp"]
     datos={
