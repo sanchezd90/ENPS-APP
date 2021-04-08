@@ -54,7 +54,8 @@ def enps_set_www():
         nombre=request.form["nombre"]
         apellido=request.form["apellido"]
         dni=request.form["dni"]
-        edad=request.form["edad"]
+        fechaNac=request.form["fechaNac"]
+        edad=calculateAge(fechaNac)
         educacion=request.form["educacion"]
         sexo=request.form["sexo"]
         codigo_evento=round(datetime.datetime.now().timestamp())
@@ -62,7 +63,7 @@ def enps_set_www():
         session["cod_evento"]=codigo_evento
         fecha=datetime.datetime.now()
         fecha=fecha.strftime("%d/%m/%y")
-        insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo_evento, fecha)
+        insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo_evento, fecha, fechaNac)
         return redirect(url_for("evento_www"))
     else:
         return redirect(url_for("create_www"))
@@ -87,6 +88,7 @@ def evento_www():
     apellido=datos_evento["apellido"]
     dni=datos_evento["dni"]
     edad=datos_evento["edad"]
+    fechaNac=datos_evento["fechaNac"]
     educacion=datos_evento["educacion"]
     sexo=datos_evento["sexo"]
     codigo=datos_evento["cod_evento"]
@@ -114,7 +116,8 @@ def evento_www():
         nombre=nombre, 
         apellido=apellido, 
         dni=dni, 
-        edad=edad, 
+        edad=edad,
+        fechaNac=fechaNac, 
         educacion=educacion, 
         sexo=sexo,
         fecha=fecha, 

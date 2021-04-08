@@ -45,13 +45,14 @@ def get_prueba(codigo):
     q=mycol.find(myquery)
     return q[0]
 
-def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha):
+def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha, fechaNac):
     col=db["eventosApp"]
     datos={
         "nombre":nombre,
         "apellido":apellido,
         "dni":dni,
         "edad":edad,
+        "fechaNac":fechaNac,
         "educacion":educacion,
         "sexo":sexo,
         "cod_evento":codigo,
