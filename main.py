@@ -243,7 +243,8 @@ def ravlt_set_www():
 @app.route("/enps/ravlt/recover/<cod_prueba>", methods=["GET","POST"])
 def ravlt_recover_www(cod_prueba):
     datos_prueba=get_prueba(cod_prueba)
-
+    ravlt_data=get_appData("ravlt")
+    session["ravlt_tnames"]=ravlt_data["trialnames"]
     #define qué lista se va a usar entre principal o alternativa
     session["listaA"]=datos_prueba["listaA"]
     session["listaB"]=datos_prueba["listaB"]
