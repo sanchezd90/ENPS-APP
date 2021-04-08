@@ -6,7 +6,7 @@ Próximos pasos
 
 version extendida
 -modificar contenido normas
---agregar espeificaciones
+--agregar especificaciones
 
 
 ERRORES

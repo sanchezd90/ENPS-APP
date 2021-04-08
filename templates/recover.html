@@ -16,13 +16,12 @@
 
     <div>
       {% for x in eventos %}
-      <a class="btn btn-success" href="/enps/recover/{{x['cod_evento']}}" role="button">{{x['apellido']}}, {{x['nombre']}} ({{x['fecha']}})</a>
+      <a class="btn btn-success mb-2" href="/enps/recover/{{x['cod_evento']}}" role="button">{{x['apellido']}}, {{x['nombre']}} ({{x['fecha']}})</a>
       {% endfor %}
     </div>
-
-    <a class="btn btn-outline-danger" href="/enps/create" role="button">Iniciar nueva evaluación</a>
-    <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
-
+    <div>
+      <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
+    </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

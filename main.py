@@ -3,7 +3,6 @@ from metodos_ravlt import *
 from metodos_db import *
 from metodos_redaccion import *
 from metodos_app import *
-
 import datetime
 
 
@@ -364,8 +363,6 @@ def ravlt_last_www():
     registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
     return redirect(url_for("ravlt_www"))
-
-
 
 @app.route("/enps/ravlt", methods=["GET","POST"])
 def ravlt_www():

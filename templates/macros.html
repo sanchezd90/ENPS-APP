@@ -293,7 +293,7 @@
   <h2>Pruebas disponibles</h2>
   {% for x in lista_pruebas_disp %}
     {% if x is in dic_pruebas_admin %}
-    <a class="btn btn-outline-primary" href="/enps/ravlt/recover/{{dic_pruebas_admin[x]}}" role="button">{{x}}</a>
+    <a class="btn btn-success" href="/enps/ravlt/recover/{{dic_pruebas_admin[x]}}" role="button">{{x}}</a>
     {% else %}
     <a class="btn btn-outline-primary" href="/enps/{{x}}/config" role="button">{{x}}</a>
     {% endif %}
