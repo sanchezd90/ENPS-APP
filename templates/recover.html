@@ -1,14 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Evaluaciones previas</h1>
-
-    <div>
-      {% for x in eventos %}
-      <a class="btn btn-success mb-2" href="/enps/recover/{{x['cod_evento']}}" role="button">{{x['apellido']}}, {{x['nombre']}} ({{x['fecha']}})</a>
-      {% endfor %}
-    </div>
-    <div>
-      <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
-    </div>
-
+<div class="container px-4 py-5 my-3 text-center" style="font-family: PT Sans,sans-serif">
+  <div>
+    <h1 class="d-block mx-auto mb-4" style="font-weight: 700">Evaluaciones previas</h1>
+  </div>   
+  <div class="d-block mx-auto mb-4">
+    <table class="table table-hover w-50 mx-auto">
+      <tr>
+        <th>Paciente</th>
+        <th>Fecha</th>
+      </tr>
+      <tr>
+        {% for x in eventos %}
+        <td><a href="/enps/recover/{{x['cod_evento']}}">{{x['apellido']}}, {{x['nombre']}}</a></td>
+        <td>{{x['fecha']}}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+  <div>
+    <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
+  </div>
+</div>
 {% endblock %}

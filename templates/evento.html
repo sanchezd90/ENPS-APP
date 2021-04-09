@@ -1,24 +1,16 @@
-{% from "macros.html" import pruebas_disp, reportes with context %}
+{% from "macros.html" import pruebas_disp, reportes,card_paciente with context %}
 
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="card border-secondary mb-3" style="max-width: 18rem;">
-      <div class="card-header">{{nombre}} {{apellido}}</div>
-      <div class="card-body text-secondary">
-        <p class="card-text"><strong>DNI:</strong> {{dni}}</p>
-        <p class="card-text"><strong>Edad:</strong> {{edad}}</p>
-        <p class="card-text"><strong>Fecha de nacimiento:</strong> {{fechaNac}}</p>
-        <p class="card-text"><strong>Sexo:</strong> {{sexo | replace("0","Masculino") | replace("1","Femenino")}}</p>
-        <p class="card-text"><strong>Educacion:</strong> {{educacion}}</p>
-      </div>
-    </div>
-    {{pruebas_disp(lista_pruebas_disp,dic_pruebas_admin, nombres_pruebas)}}
-    
-    {% if dic_reportes | length() > 0 %}
-    {{reportes(dic_reportes,nombres_pruebas)}}
-    {% endif %}
+<div class="container px-4 py-5 my-3" style="font-family: PT Sans,sans-serif">
+  {{card_paciente()}}
+  {{pruebas_disp(lista_pruebas_disp,dic_pruebas_admin, nombres_pruebas)}}
 
-    <a class="btn btn-outline-danger" href="/enps" role="button">Salir de la evaluación</a>
+  {% if dic_reportes | length() > 0 %}
+  {{reportes(dic_reportes,nombres_pruebas)}}
+  {% endif %}
 
+  <a class="btn btn-outline-danger" href="/enps" role="button">Salir de la evaluación</a>
+</div>
 {% endblock %}

@@ -1,45 +1,40 @@
-{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m, scores, mas_info,targets_chart,ravlt_parrafo with context %}
+{% from "macros.html" import tabla_puntajes,links_trials,timeUp_m, scores, mas_info,targets_chart,ravlt_parrafo,card_paciente with context %}
 
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="card border-secondary mb-3" style="max-width: 18rem;">
-      <div class="card-header">Datos del paciente</div>
-      <div class="card-body text-secondary">
-        <p class="card-text"><strong>Edad:</strong> {{edad}}</p>
-        <p class="card-text"><strong>Sexo:</strong> {{sexo | replace("0","Masculino") | replace("1","Femenino")}}</p>
-        <p class="card-text"><strong>Educacion:</strong> {{educacion}}</p>
-      </div>
-    </div>
+<div class="container px-4 py-5 my-3" style="font-family: PT Sans,sans-serif">
 
-    {% if registro["raw_scores"]["t8"]!=None %}
-      {{ ravlt_parrafo(parrafo) }}
-    {% else %}
-      {% if timeUp != None%}
-        {{timeUp_m(trial_num)}}
-      {% endif %}
+  {{card_paciente()}}
+
+  {% if registro["raw_scores"]["t8"]!=None %}
+    {{ ravlt_parrafo(parrafo) }}
+  {% else %}
+    {% if timeUp != None%}
+      {{timeUp_m(trial_num)}}
     {% endif %}
+  {% endif %}
 
-    <div>
-      <a class="btn btn-success" href="/enps/ravlt/trial/t1" role="button">Iniciar</a>
-      <a class="btn btn-success" href="/enps/ravlt/trial/t7" role="button">Evocación</a>
-    </div>
-    
+  <div>
+    <a class="btn btn-success" href="/enps/ravlt/trial/t1" role="button">Iniciar</a>
+    <a class="btn btn-success" href="/enps/ravlt/trial/t7" role="button">Evocación</a>
+  </div>
+  
 
-    {% if any_score %}
-    {{scores(raw_scores, z_scores)}}
-    {% endif %}
+  {% if any_score %}
+  {{scores(raw_scores, z_scores)}}
+  {% endif %}
 
-    {% if any_score %}
-    {{ mas_info(registro) }}
-    {% endif %}
+  {% if any_score %}
+  {{ mas_info(registro) }}
+  {% endif %}
 
-    {{targets_chart(listaA,mainM)}}
+  {{targets_chart(listaA,mainM)}}
 
 
 
-    <div>
-      <a class="btn btn-primary" href="/enps/recover/{{cod_evento}}" role="button">Volver a evaluación</a>
-    </div>
-
+  <div>
+    <a class="btn btn-primary" href="/enps/recover/{{cod_evento}}" role="button">Volver a evaluación</a>
+  </div>
+</div>
 {% endblock %}

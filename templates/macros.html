@@ -289,8 +289,8 @@
 {%- endmacro %}
 
 {% macro pruebas_disp(lista_pruebas_disp,dic_pruebas_admin,nombres_pruebas) %}
-<div>
-  <h2>Pruebas disponibles</h2>
+<div class="mb-4">
+  <h2>Pruebas</h2>
   {% for x in lista_pruebas_disp %}
     {% if x is in dic_pruebas_admin %}
     <a class="btn btn-success" href="/enps/ravlt/recover/{{dic_pruebas_admin[x]}}" role="button">{{nombres_pruebas[x]}}</a>
@@ -302,11 +302,24 @@
 {%- endmacro %}
 
 {% macro reportes(dic_reportes,nombres_pruebas) %}
-<div>
+<div class="mb-4">
   <h2>Reporte</h2>
   {% for x in dic_reportes %}
     <h5>{{nombres_pruebas[x]}}</h5>
     <p>{{dic_reportes[x]}}</p>
   {% endfor %}
 </div>
+{%- endmacro %}
+
+{% macro card_paciente() %}
+  <div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">{{nombre}} {{apellido}}</div>
+    <div class="card-body text-secondary">
+      <p class="card-text"><strong>DNI:</strong> {{dni}}</p>
+      <p class="card-text"><strong>Edad:</strong> {{edad}}</p>
+      <p class="card-text"><strong>Fecha de nacimiento:</strong> {{fechaNac}}</p>
+      <p class="card-text"><strong>Sexo:</strong> {{sexo | replace("0","Masculino") | replace("1","Femenino")}}</p>
+      <p class="card-text"><strong>Educacion:</strong> {{educacion}}</p>
+    </div>
+  </div>
 {%- endmacro %}

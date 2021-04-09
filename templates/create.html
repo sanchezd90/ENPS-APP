@@ -1,39 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container px-4 py-5 my-3 text-center" style="font-family: PT Sans,sans-serif">
+  <div>
+    <h1 class="d-block mx-auto mb-4" style="font-weight: 700">Datos del paciente</h1>
+  </div>
+  <div class="d-block mx-auto mb-4 fw-bold">
+  <form action="/enps/create/set" method="POST">
+      <div class="mb-3 w-50 p-3 mx-auto">
+        <label for="dniInput" class="form-label">DNI</label>
+        <input type="text" class="form-control" name="dni" required>
+      </div>
+      <div class="mb-3 w-50 p-3 mx-auto">
+        <label for="nameInput" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="nombre" required>
+      </div>
+      <div class="mb-3 w-50 p-3 mx-auto">
+        <label for="apellidoInput" class="form-label">Apellido</label>
+        <input type="text" class="form-control" name="apellido" required>
+      </div>
+      <div class="mb-3 mx-auto">
+        <label for="fechaNac">Fecha de nacimiento:</label>
+        <input type="date" id="fechaNac" name="fechaNac" required>
+      </div>
+      <div class="mb-3 w-50 p-3 mx-auto">
+          <label for="educationInput" class="form-label">Años de educación</label>
+          <input type="number" class="form-control" name="educacion" min="0" max="30" required>
+        </div>
+      <div class="mb-3 w-50 p-3 mx-auto">
+          <label class="form-label">Sexo</label>
+          <select class="form-select" aria-label="sexo" name="sexo">
+              <option value="0">Masculino</option>
+              <option value="1">Femenino</option>
+          </select>
+      </div>
+      <button type="submit" class="btn btn-primary w-50 p-3 d-block mx-auto mb-4 fw-bold">Nueva evaluación</button>
+  </form>
+ </div>
+ <div>
+  <a class="btn btn-outline-danger w-50 p-3 d-block mx-auto mb-4 fw-bold" href="/enps" role="button">Volver al inicio</a>
+ </div>
 
-    <h1>Datos del paciente y de la prueba</h1>
-
-    <form action="/enps/create/set" method="POST">
-        <div class="mb-3">
-          <label for="dniInput" class="form-label">DNI</label>
-          <input type="text" class="form-control" name="dni" required>
-        </div>
-        <div class="mb-3">
-          <label for="nameInput" class="form-label">Nombre</label>
-          <input type="text" class="form-control" name="nombre" required>
-        </div>
-        <div class="mb-3">
-          <label for="apellidoInput" class="form-label">Apellido</label>
-          <input type="text" class="form-control" name="apellido" required>
-        </div>
-        <div class="mb-3">
-          <label for="fechaNac">Fecha de nacimiento:</label>
-          <input type="date" id="fechaNac" name="fechaNac" required>
-        </div>
-        <div class="mb-3">
-            <label for="educationInput" class="form-label">Años de educación</label>
-            <input type="number" class="form-control" name="educacion" min="0" max="30" required>
-          </div>
-        <div class="mb-3">
-            <label class="form-label">Sexo</label>
-            <select class="form-select" aria-label="sexo" name="sexo">
-                <option value="0">Masculino</option>
-                <option value="1">Femenino</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Nueva evaluación</button>
-    </form>
-
-    <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
+</div>
 
 {% endblock %}
