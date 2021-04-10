@@ -64,8 +64,10 @@ def evento_www():
     nombre=datos_evento["nombre"]
     apellido=datos_evento["apellido"]
     dni=datos_evento["dni"]
+    session["dni"]=dni
     edad=datos_evento["edad"]
     fechaNac=datos_evento["fechaNac"]
+    session["fechaNac"]=fechaNac
     educacion=datos_evento["educacion"]
     sexo=datos_evento["sexo"]
     codigo=datos_evento["cod_evento"]
@@ -377,6 +379,8 @@ def ravlt_www():
     nombre=session["nombre"]
     apellido=session["apellido"]
     educacion=session["educacion"]
+    dni=session["dni"]
+    fechaNac=session["fechaNac"]
     trial_num=session["current_trial"]
     listaA=session["listaA"]
     listaB=session["listaB"]
@@ -405,6 +409,8 @@ def ravlt_www():
         edad=edad, 
         sexo=sexo, 
         educacion=educacion,
+        dni=dni,
+        fechaNac=fechaNac,
         trial_num=trial_num,
         timeUp=timeUp_str,
         raw_scores=raw_scores,

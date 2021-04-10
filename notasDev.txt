@@ -1,18 +1,10 @@
 Próximos pasos
 
--Incluir los composite scores
+-Incluir los composite scores de RAVLT
 -mostrar normas en una página aparte
--permitir reporte parcial
-
-version extendida
--modificar contenido normas
---agregar especificaciones
-
+-pensar redaccion de informes (considerando que no hay un parrafo suelto por prueba sino que algunos parrafos se componen de reporte de variaspruebas)
+-agregar buscador de evaluaciones
 
 ERRORES
 
-
 #estructura de los datos: norms[SNE][medida][sexo][edad]
-
-logo ineco
-https://www.ineco.org.ar/wp-content/themes/ineco/assets/images/logo_ineco.svg

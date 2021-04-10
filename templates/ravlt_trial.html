@@ -3,43 +3,42 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="container px-4 py-5 my-3" style="font-family: PT Sans,sans-serif">
+  <h1>Trial {{short_name}}</h1>
 
-    <h1>Trial {{short_name}}</h1>
+  {% if timeUp != None%}
+  {{timeUp_m(trial_num)}}
+  {% endif %}
 
-    {% if timeUp != None%}
-    {{timeUp_m(trial_num)}}
-    {% endif %}
-
-    
-    {% if short_name=="8" %}
-
-    {{checkbox(lista_rec,checkbox_list)}}
-
-    {% else %}
-
-    {{t_input(answer)}}
-
-    {% endif %}
-
-    {% if trial_num==5%}
-      {{table_listaB(listaB)}}
-    {% elif trial_num==6%}
-      {{targets_chart(listaB,mainM)}}
-    {% else %}
-      {{targets_chart(listaA,mainM)}}
-    {% endif %}
   
-    {% if any_score %}
-    {{scores(raw_scores, z_scores)}}
-    {% endif %}
+  {% if short_name=="8" %}
 
-    {% if any_score %}
-    {{ mas_info(registro) }}
-    {% endif %}
+  {{checkbox(lista_rec,checkbox_list)}}
 
-    <div>
-      <a class="btn btn-primary" href="/enps/ravlt" role="button">Resumen RAVLT</a>
-      <a class="btn btn-outline-danger" href="/enps/ravlt/config" role="button">Reiniciar</a>
-    </div>
+  {% else %}
 
+  {{t_input(answer)}}
+
+  {% endif %}
+
+  {% if trial_num==5%}
+    {{table_listaB(listaB)}}
+  {% elif trial_num==6%}
+    {{targets_chart(listaB,mainM)}}
+  {% else %}
+    {{targets_chart(listaA,mainM)}}
+  {% endif %}
+
+  {% if any_score %}
+  {{scores(raw_scores, z_scores)}}
+  {% endif %}
+
+  {% if any_score %}
+  {{ mas_info(registro) }}
+  {% endif %}
+
+  <div>
+    <a class="btn btn-primary" href="/enps/ravlt" role="button">Resumen RAVLT</a>
+  </div>
+</div>
 {% endblock %}

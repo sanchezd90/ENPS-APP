@@ -92,7 +92,7 @@
 {%- endmacro %}
 
 {% macro t_input(answer) -%}
-<div>
+<div class="mb-4">
   <form action="/enps/ravlt/trial/{{next_name}}" method="POST">
     <div>
       <textarea name="respuesta" class="col-sm-3">{{answer}}</textarea>
@@ -190,14 +190,14 @@
 {%- endmacro %}
 
 {% macro mas_info(registro) %}
-<div>
+<div class="mb-4">
   <p>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#masInfo" aria-expanded="false" aria-controls="masInfo">
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#masInfo" aria-expanded="false" aria-controls="masInfo">
       Más información 
     </button>
   </p>
   <div class="collapse" id="masInfo">
-    <div class="card card-body col-sm-3">
+    <div class="card card-body col-sm-5 col-md-5 col-lg-5">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -215,9 +215,9 @@
               {% else %}
               <th scope="row">{{x | replace("5","Lista B") | replace("7","Diferido") | replace("8","Reconocimiento") }}</th>
             {% endif %}
-            <td>{{registro["confab"][x]}}</td>
-            <td>{{registro["intrusiones"][x]}}</td>
-            <td>{{registro["repeticiones"][x]}}</td>
+            <td>{{registro["confab"][x] | replace("0","") }}</td>
+            <td>{{registro["intrusiones"][x] | replace("0","") }}</td>
+            <td>{{registro["repeticiones"][x] | replace("0","") }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -228,42 +228,44 @@
 {%- endmacro %}
 
 {% macro targets_chart(listaA,mainM) %}
-<table>
-  <tr>
-    <td></td>
-    <td>T1</td>
-    <td>T2</td>
-    <td>T3</td>
-    <td>T4</td>
-    <td>T5</td>
-    <td>T6</td>
-    <td>Dif</td>
-    <td>Rec</td>
-  </tr>
-  {% for x in range(0,15) %}
-  <tr>
-    <td>{{listaA[x]}}</td>
-      {% for y in range(0,5)%}
-        {% if mainM[y]!=None%}
-          {% if mainM[y][x] > 0%}
-            <td bgcolor="green"></td>
-          {% else %}
-            <td bgcolor="white"></td>
+<div class="mb-4" style="background-color:#f8f9fa">
+  <table>
+    <tr>
+      <td></td>
+      <td>T1</td>
+      <td>T2</td>
+      <td>T3</td>
+      <td>T4</td>
+      <td>T5</td>
+      <td>T6</td>
+      <td>Dif</td>
+      <td>Rec</td>
+    </tr>
+    {% for x in range(0,15) %}
+    <tr>
+      <td>{{listaA[x]}}</td>
+        {% for y in range(0,5)%}
+          {% if mainM[y]!=None%}
+            {% if mainM[y][x] > 0%}
+              <td style="background-color:green"></td>
+            {% else %}
+              <td style="background-color:#f8f9fa"></td>
+            {% endif %}
           {% endif %}
-        {% endif %}
-      {% endfor %}
-      {% for y in range(6,9)%}
-        {% if mainM[y]!=None%}
-          {% if mainM[y][x] > 0%}
-            <td bgcolor="green"></td>
-          {% else %}
-            <td bgcolor="white"></td>
+        {% endfor %}
+        {% for y in range(6,9)%}
+          {% if mainM[y]!=None%}
+            {% if mainM[y][x] > 0%}
+              <td style="background-color:green"></td>
+            {% else %}
+              <td style="background-color:#f8f9fa"></td>
+            {% endif %}
           {% endif %}
-        {% endif %}
-      {% endfor %}
-  </tr>
-  {% endfor %}
-</table>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 {%- endmacro %}
 
 {% macro table_listaB(listaB) %}
@@ -282,7 +284,7 @@
 {%- endmacro %}
 
 {% macro ravlt_parrafo(parrafo) %}
-<div>
+<div class="mb-4">
   <h2>Reporte</h2>
   <p>{{parrafo}}</p>
 </div>
