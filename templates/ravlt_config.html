@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <h1>Configuración de la prueba</h1>
-
-    <form action="/enps/ravlt/set" method="POST">
-        <div>
-          <label class="form-label">Lista</label>
-          <select class="form-select" aria-label="lista" name="lista">
-              <option value="0">Principal (Tambor)</option>
-              <option value="1">Alternativa (Pasto)</option>
-          </select>
-      </div>
-      <div>
-          <label class="form-label">Normas</label>
-          <select class="form-select" aria-label="normas" name="normas">
-              <option value="Geffen(1995)">Geffen</option>
-          </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Iniciar</button>
-        
- 
-    </form>
-
+<div class="container px-4 py-5 my-3 text-center" style="font-family: PT Sans,sans-serif">
+    <div>
+        <h1 class="d-block mx-auto mb-4">Configuración de la prueba</h1>
+    </div>
+    <div class="d-block mx-auto mb-4">
+        <form action="/enps/ravlt/set" method="POST">
+            <div class="mb-3 w-50 p-3 mx-auto">
+            <label class="form-label">Lista</label>
+            <select class="form-select" aria-label="lista" name="lista">
+                <option value="0">Principal (Tambor)</option>
+                <option value="1">Alternativa (Pasto)</option>
+            </select>
+        </div>
+        <div class="mb-3 w-50 p-3 mx-auto">
+            <label class="form-label">Normas</label>
+            <select class="form-select" aria-label="normas" name="normas">
+                <option value="Geffen(1995)">Geffen</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-50 p-3 d-block mx-auto mb-4 fw-bold">Iniciar</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

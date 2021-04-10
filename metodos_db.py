@@ -1,13 +1,18 @@
 import pymongo
+import re
 
 cluster=pymongo.MongoClient("mongodb+srv://sanchezd90:dbuser-L6H6@cluster0.wwnbb.mongodb.net/<ENPS>?retryWrites=true&w=majority")
 db=cluster["ENPS"]
+
+#NORMAS
 
 def get_norms(prueba,autor):
     col=db["normas"]
     query={"autor":autor,"prueba":prueba}
     doc=col.find(query)
     return doc[0]
+
+#EVS APP
 
 def insert_doc(datos):
     col=db["evsApp"]
@@ -20,11 +25,6 @@ def update_doc(codigo,datos):
     newvalues={ "$set": { "puntajes": datos } }
     mycol.update_one(myquery, newvalues)
 
-def update_reportes(codigo,datos):
-    mycol=db["eventosApp"]
-    myquery = { "cod_evento": codigo }
-    newvalues={ "$set": { "reportes": datos } }
-    mycol.update_one(myquery, newvalues)
 
 def update_value(codigo,key,value):
     mycol=db["evsApp"]
@@ -45,13 +45,15 @@ def get_prueba(codigo):
     q=mycol.find(myquery)
     return q[0]
 
-def get_test_names():
-    mycol=db["appData"]
-    myquery = {}
-    field={"_id":0, "nombres_pruebas":1}
-    q=mycol.find(myquery,field)
-    q=q[0]["nombres_pruebas"]
-    return q
+
+# EVENTOS APP
+
+def update_reportes(codigo,datos):
+    mycol=db["eventosApp"]
+    myquery = { "cod_evento": codigo }
+    newvalues={ "$set": { "reportes": datos } }
+    mycol.update_one(myquery, newvalues)
+
 
 def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha, fechaNac):
     col=db["eventosApp"]
@@ -84,17 +86,36 @@ def get_all_events():
         out.append(x)
     return out
 
-def get_pruebas_disp():
-    mycol=db["appData"]
-    q=mycol.find({},{"_id":0, "pruebas_disponibles":1})
-    q=q[0]["pruebas_disponibles"]
-    return q
-
-def get_appData(prueba):
-    mycol=db["appData"]
-    q=mycol.find({},{"_id":0, prueba:1})
-    q=q[0][prueba]
-    return q
+def get_by_name(name):
+    mycol=db["eventosApp"]
+    out=[]
+    myquery={ "apellido":  name }
+    field={ "_id":0, "nombre":1, "apellido":1, "cod_evento":1, "fecha":1}
+    for x in mycol.find(myquery,field):
+        out.append(x)
+    myquery={ "nombre":  name }
+    field={ "_id":0, "nombre":1, "apellido":1, "cod_evento":1, "fecha":1}
+    for x in mycol.find(myquery,field):
+        if x in out:
+            pass
+        else:
+            out.append(x)
+    term="\A"+name
+    myquery={ "apellido":  {"$regex": term} }
+    field={ "_id":0, "nombre":1, "apellido":1, "cod_evento":1, "fecha":1}
+    for x in mycol.find(myquery,field):
+        if x in out:
+            pass
+        else:
+            out.append(x)
+    myquery={ "nombre":  {"$regex": term} }
+    field={ "_id":0, "nombre":1, "apellido":1, "cod_evento":1, "fecha":1}
+    for x in mycol.find(myquery,field):
+        if x in out:
+            pass
+        else:
+            out.append(x)
+    return out
 
 def relacionar(cod_evento,cod_prueba):
     eventos=db["eventosApp"]
@@ -107,3 +128,26 @@ def relacionar(cod_evento,cod_prueba):
     pruebas_admin.append(cod_prueba)
     newvalues={ "$set": { "pruebas_admin": pruebas_admin } }
     eventos.update_one({ "cod_evento": cod_evento }, newvalues)
+
+
+# APP DATA
+
+def get_test_names():
+    mycol=db["appData"]
+    myquery = {}
+    field={"_id":0, "nombres_pruebas":1}
+    q=mycol.find(myquery,field)
+    q=q[0]["nombres_pruebas"]
+    return q
+
+def get_pruebas_disp():
+    mycol=db["appData"]
+    q=mycol.find({},{"_id":0, "pruebas_disponibles":1})
+    q=q[0]["pruebas_disponibles"]
+    return q
+
+def get_appData(prueba):
+    mycol=db["appData"]
+    q=mycol.find({},{"_id":0, prueba:1})
+    q=q[0][prueba]
+    return q

@@ -315,7 +315,7 @@
 
 {% macro card_paciente() %}
   <div class="card border-secondary mb-3" style="max-width: 18rem;">
-    <div class="card-header">{{nombre}} {{apellido}}</div>
+    <div class="card-header">{{nombre | title()}} {{apellido | title()}}</div>
     <div class="card-body text-secondary">
       <p class="card-text"><strong>DNI:</strong> {{dni}}</p>
       <p class="card-text"><strong>Edad:</strong> {{edad}}</p>
@@ -325,3 +325,15 @@
     </div>
   </div>
 {%- endmacro %}
+
+{% macro search_event() %}
+<div>
+  <form action="/enps/recover/search" method="POST">
+    <div class="mb-3 w-50 p-3 mx-auto">
+      <input type="text" class="form-control" name="event_search" required>
+      <button type="submit" class="btn btn-primary w-50 p-3 d-block mx-auto my-3 fw-bold">Buscar</button>
+    </div>
+  </form>
+</div>
+{%- endmacro %}
+

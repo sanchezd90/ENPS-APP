@@ -29,7 +29,9 @@ def create_www():
 def enps_set_www():
     if request.method == "POST":
         nombre=request.form["nombre"]
+        nombre=nombre.lower()
         apellido=request.form["apellido"]
+        apellido=apellido.lower()
         dni=request.form["dni"]
         fechaNac=request.form["fechaNac"]
         edad=calculateAge(fechaNac)
@@ -49,7 +51,16 @@ def enps_set_www():
 @app.route("/enps/recover", methods=["GET","POST"])
 def recover_www():
     all_events=get_all_events()
-    return render_template("recover.html",eventos=all_events)
+    search=None
+    return render_template("recover.html",eventos=all_events,search=search)
+
+@app.route("/enps/search", methods=["GET","POST"])
+def search_www():
+    all_events=get_all_events()
+    search=request.form["event_search"].lower()
+    results=get_by_name(search)
+    return render_template("recover.html",eventos=all_events,search=search, results=results)
+
 
 @app.route("/enps/recover/<codigo>", methods=["GET","POST"])
 def recover_cod_www(codigo):

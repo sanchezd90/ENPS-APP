@@ -1,23 +1,52 @@
+{% from "macros.html" import search_event with context %}
+
 {% extends "base.html" %}
 {% block content %}
 <div class="container px-4 py-5 my-3 text-center" style="font-family: PT Sans,sans-serif">
   <div>
-    <h1 class="d-block mx-auto mb-4" style="font-weight: 700">Evaluaciones previas</h1>
+    <h1 class="d-block mx-auto mb-4" style="font-weight: 700">Explorador de evaluaciones</h1>
   </div>   
   <div class="d-block mx-auto mb-4">
     <table class="table table-hover w-50 mx-auto">
+      <h5>Evaluciones recientes</h5>
       <tr>
         <th>Paciente</th>
         <th>Fecha</th>
       </tr>
-      <tr>
-        {% for x in eventos %}
-        <td><a href="/enps/recover/{{x['cod_evento']}}">{{x['apellido']}}, {{x['nombre']}}</a></td>
-        <td>{{x['fecha']}}</td>
+        {% for x in range (1,6) %}
+        <tr>
+          <td><a href="/enps/recover/{{eventos[-x]['cod_evento']}}">{{eventos[-x]['apellido'] | title() }}, {{eventos[-x]['nombre'] | title()}}</a></td>
+          <td>{{eventos[-x]['fecha']}}</td>
+        </tr>
         {% endfor %}
-      </tr>
     </table>
   </div>
+
+  {{ search_event()}}
+
+  {% if search!= None %}
+    {% if results | length() > 0 %}
+      <div class="d-block mx-auto mb-4">
+        <table class="table table-hover w-50 mx-auto">
+          <tr>
+            <th>Paciente</th>
+            <th>Fecha</th>
+          </tr>
+            {% for x in results %}
+            <tr>
+              <td><a href="/enps/recover/{{x['cod_evento']}}">{{x['apellido'] | title() }}, {{x['nombre'] | title()}}</a></td>
+              <td>{{x['fecha']}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+      </div>
+    {% else %}
+    <div>
+      <h5>No hay resultados para esta búsqueda</h5>
+    </div>
+    {% endif %}
+  {% endif %}
+
   <div>
     <a class="btn btn-outline-danger" href="/enps" role="button">Volver al inicio</a>
   </div>
