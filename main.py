@@ -245,6 +245,8 @@ def ravlt_set_www():
         session["cod_prueba"]=codigo_prueba
         dicc_session["cod_prueba"]=codigo_prueba
         dicc_session["parrafo"]=""
+        dicc_session["obs"]=""
+        session["ravlt_obs"]=""
         dicc_session["prueba"]="ravlt"
         insert_doc(dicc_session)
         relacionar(codigo_evento, codigo_prueba)
@@ -289,6 +291,9 @@ def ravlt_recover_www(cod_prueba):
     dicc_session["cod_prueba"]=codigo_prueba
     parrafo=datos_prueba["parrafo"]
     dicc_session["parrafo"]=parrafo
+    obs=datos_prueba["obs"]
+    dicc_session["obs"]=obs
+    session["ravlt_obs"]=obs
     prueba=datos_prueba["prueba"]
     dicc_session["prueba"]=prueba
 
@@ -331,15 +336,24 @@ def ravlt_t_www(trial_name):
     z_scores=session["puntajes"]["z_scores"]
     any_score=any(raw_scores.values())
     
+    codigo=session["cod_prueba"]
+
     answer=session["puntajes"]["respuestasM"][trial_num]
     try:
         answer=",".join(answer)
     except:
         answer=""
     
+    try:
+        obs=request.form["ravlt_obs"]
+    except:
+        obs=session["ravlt_obs"]
+
+    session["ravlt_obs"]=obs
+    update_value(codigo, "obs", session["ravlt_obs"])
     registro=session["puntajes"]
 
-    codigo=session["cod_prueba"]
+    
     checkbox_dict=get_data(codigo,"puntajes.respuestasM")
     checkbox_list=checkbox_dict["puntajes"]["respuestasM"][8]
     if checkbox_list==None:
@@ -360,6 +374,7 @@ def ravlt_t_www(trial_name):
         listaB=listaB,
         mainM=registro["mainM"],
         answer=answer,
+        ravlt_obs=obs,
         checkbox_list=checkbox_list
         )
 
@@ -378,6 +393,7 @@ def ravlt_last_www():
     normas_sujeto=session["normas_sujeto"]
     registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
+
     return redirect(url_for("ravlt_www"))
 
 @app.route("/enps/ravlt", methods=["GET","POST"])
@@ -395,6 +411,7 @@ def ravlt_www():
     trial_num=session["current_trial"]
     listaA=session["listaA"]
     listaB=session["listaB"]
+    ravlt_obs=session["ravlt_obs"]
 
     #variable para definir tiempo de toma
     timeUp_str=session["timeUp_str"]

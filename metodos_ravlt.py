@@ -282,6 +282,7 @@ def registrarTrial(listaA,listaB,trial_num,normas_sujeto,last=False):
         codigo=session["cod_prueba"]
         datos=session["puntajes"]
         update_doc(codigo,datos)
+        
 
 def save_last():
     codigo=session["cod_prueba"]

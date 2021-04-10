@@ -91,11 +91,16 @@
 </div>
 {%- endmacro %}
 
-{% macro t_input(answer) -%}
+{% macro t_input(answer,ravlt_obs) -%}
 <div class="mb-4">
   <form action="/enps/ravlt/trial/{{next_name}}" method="POST">
     <div>
+      <label for="respuesta" class="form-label">Respuesta</label>
       <textarea name="respuesta" class="col-sm-3">{{answer}}</textarea>
+    </div>
+    <div>
+      <label for="ralt_obs" class="form-label">Observaciones</label>
+      <textarea name="ravlt_obs" class="col-sm-3">{{ravlt_obs}}</textarea>
     </div>
     <div>
       <button type="submit" class="btn btn-success">Continuar</button>
