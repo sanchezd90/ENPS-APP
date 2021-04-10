@@ -45,6 +45,11 @@ def get_prueba(codigo):
     q=mycol.find(myquery)
     return q[0]
 
+def update_all(key,value):
+    mycol=db["evsApp"]
+    myquery = {}
+    newvalues={ "$set": { key: value } }
+    mycol.update_many(myquery, newvalues)
 
 # EVENTOS APP
 
