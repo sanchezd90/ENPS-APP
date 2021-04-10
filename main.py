@@ -430,6 +430,8 @@ def ravlt_www():
     except:
         parrafo=""
 
+    obs=session["ravlt_obs"]
+
     return render_template(
         "ravlt.html",
         nombre=nombre,
@@ -448,6 +450,7 @@ def ravlt_www():
         listaA=listaA,
         mainM=registro["mainM"],
         parrafo=parrafo,
+        obs=obs,
         cod_evento=session["cod_evento"]
         )
 

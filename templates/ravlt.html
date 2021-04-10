@@ -9,11 +9,15 @@
 
   {% if registro["raw_scores"]["t8"]!=None %}
     {{ ravlt_parrafo(parrafo) }}
+    <h5>Observaciones:</h5>
+    <p>{{obs}}</p>
   {% else %}
     {% if timeUp != None%}
       {{timeUp_m(trial_num)}}
     {% endif %}
   {% endif %}
+
+  
 
   <div class="mb-4">
     <a class="btn btn-primary" href="/enps/ravlt/trial/t1" role="button">Trials Aprendizaje</a>
