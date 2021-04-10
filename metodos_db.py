@@ -79,6 +79,7 @@ def get_event(codigo):
     q=mycol.find(myquery)
     return q[0]
 
+
 def get_all_events():
     mycol=db["eventosApp"]
     out=[]
@@ -116,6 +117,7 @@ def get_by_name(name):
         else:
             out.append(x)
     return out
+
 
 def relacionar(cod_evento,cod_prueba):
     eventos=db["eventosApp"]
