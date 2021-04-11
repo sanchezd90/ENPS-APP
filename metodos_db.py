@@ -84,6 +84,12 @@ def get_event(codigo):
     q=mycol.find(myquery)
     return q[0]
 
+def get_from_event(cod_evento,key):
+    mycol=db["eventosApp"]
+    myquery = { "cod_evento": cod_evento }
+    field= { "_id":0, key:1}
+    q=mycol.find(myquery,field)
+    return q[0][key]
 
 def get_all_events():
     mycol=db["eventosApp"]
@@ -136,6 +142,18 @@ def relacionar(cod_evento,cod_prueba):
     newvalues={ "$set": { "pruebas_admin": pruebas_admin } }
     eventos.update_one({ "cod_evento": cod_evento }, newvalues)
 
+
+def update_all(key,value):
+    mycol=db["eventosApp"]
+    myquery = {}
+    newvalues={ "$set": { key: value } }
+    mycol.update_many(myquery, newvalues)
+
+def update_event(cod_evento,key,value):
+    mycol=db["eventosApp"]
+    myquery = { "cod_evento": cod_evento }
+    newvalues={ "$set": { key: value } }
+    mycol.update_one(myquery, newvalues)
 
 # APP DATA
 

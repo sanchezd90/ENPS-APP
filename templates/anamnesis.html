@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container px-4 py-5 my-3" style="font-family: PT Sans,sans-serif">
+    <h1 style="font-weight: 700"> Anamnesis </h1>
+    <form action="/enps/anamnesis/set" method="POST">
+        <div>
+            <h5>Antecedentes</h5>
+            <textarea name="antecedentes" class="col-sm-3 w-100" rows="10">{% if antecedentes!=None %}{{antecedentes}}{%endif%}</textarea>
+        </div>
+        <div>
+            <h5>Observaciones</h5>
+            <textarea name="observaciones" class="col-sm-3 w-100" rows="10">{% if observaciones!=None %}{{observaciones}}{%endif%}</textarea>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+    </form>
+    <a class="btn btn-outline-danger my-4" href="/enps/evento" role="button">Volver a evaluación</a>
+</div>
+
+{% endblock content %}

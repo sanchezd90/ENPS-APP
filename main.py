@@ -84,6 +84,8 @@ def evento_www():
     codigo=datos_evento["cod_evento"]
     fecha=datos_evento["fecha"]
     pruebas_admin=datos_evento["pruebas_admin"]
+    antecedentes=datos_evento["info"]["antecedentes"]
+    observaciones=datos_evento["info"]["observaciones"]
     if pruebas_admin==None:
         pruebas_admin=[]
     dic_pruebas_admin={}
@@ -116,8 +118,31 @@ def evento_www():
         lista_pruebas_disp=pruebas_disponibles,
         dic_pruebas_admin=dic_pruebas_admin,
         dic_reportes=reportes,
-        nombres_pruebas=nombres_pruebas
+        nombres_pruebas=nombres_pruebas,
+        antecedentes=antecedentes,
+        observaciones=observaciones
         )
+
+@app.route("/enps/anamnesis", methods=["GET","POST"])
+def anamnesis_www():
+    cod_evento=session["cod_evento"]
+    info=get_from_event(cod_evento, "info")
+    antecedentes=info["antecedentes"]
+    observaciones=info["observaciones"]
+    return render_template(
+        "anamnesis.html",
+        antecedentes=antecedentes,
+        observaciones=observaciones
+        )
+
+@app.route("/enps/anamnesis/set", methods=["GET","POST"])
+def anamnesis_set_www():
+    cod_evento=session["cod_evento"]
+    antecedentes=request.form["antecedentes"]
+    observaciones=request.form["observaciones"]
+    info={"antecedentes":antecedentes,"observaciones":observaciones}
+    update_event(cod_evento, "info", info)
+    return redirect(url_for("anamnesis_www"))
 
 #home para cargar los datos iniciales
 @app.route("/enps/ravlt/config", methods=["GET","POST"])

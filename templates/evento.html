@@ -4,7 +4,12 @@
 {% block content %}
 
 <div class="container px-4 py-5 my-3" style="font-family: PT Sans,sans-serif">
-  {{card_paciente()}}
+  {{card_paciente(antecedentes,observaciones)}}
+
+  <a class="btn btn-outline-primary my-4" href="/enps/anamnesis" role="button">Agregar información</a>
+
+
+
   {{pruebas_disp(lista_pruebas_disp,dic_pruebas_admin, nombres_pruebas)}}
 
   <a class="btn btn-outline-danger" href="/enps" role="button">Salir de la evaluación</a>

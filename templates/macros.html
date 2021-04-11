@@ -318,7 +318,7 @@
 </div>
 {%- endmacro %}
 
-{% macro card_paciente() %}
+{% macro card_paciente(antecedentes,observaciones) %}
   <div class="card border-secondary mb-3" style="max-width: 18rem;">
     <div class="card-header">{{nombre | title()}} {{apellido | title()}}</div>
     <div class="card-body text-secondary">
@@ -327,6 +327,14 @@
       <p class="card-text"><strong>Fecha de nacimiento:</strong> {{fechaNac}}</p>
       <p class="card-text"><strong>Sexo:</strong> {{sexo | replace("0","Masculino") | replace("1","Femenino")}}</p>
       <p class="card-text"><strong>Educacion:</strong> {{educacion}}</p>
+      {% if antecedentes!=None%}
+      <p><strong>Antecedentes</strong></p>
+      <p style="font-size: small;">{{antecedentes}}</p>
+      {% endif %}
+      {% if observaciones!=None%}
+      <p><strong>Observaciones</strong></p>
+      <p style="font-size: small;">{{observaciones}}</p>
+      {% endif %}
     </div>
   </div>
 {%- endmacro %}
