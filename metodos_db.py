@@ -1,7 +1,8 @@
 import pymongo
 import re
+import os
 
-cluster=pymongo.MongoClient("mongodb+srv://sanchezd90:dbuser-L6H6@cluster0.wwnbb.mongodb.net/<ENPS>?retryWrites=true&w=majority")
+cluster=os.environ.get("cluster","mongoDB cluster")
 db=cluster["ENPS"]
 
 #NORMAS
