@@ -2,9 +2,10 @@ import pymongo
 import re
 import os
 
-cluster=os.environ.get("CLUSTER","CLUSTER")
-db=cluster
-pp=db[0]
+key=os.environ.get("password","")
+srv="mongodb+srv://sanchezd90:"+key+"@cluster0.wwnbb.mongodb.net/<ENPS>?retryWrites=true&w=majority"
+cluster=pymongo.MongoClient(srv)
+db=cluster["ENPS"]
 
 #NORMAS
 
