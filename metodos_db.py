@@ -3,7 +3,8 @@ import re
 import os
 
 cluster=os.environ.get("CLUSTER","CLUSTER")
-db=cluster["ENPS"]
+db=cluster
+pp=db[0]
 
 #NORMAS
 
