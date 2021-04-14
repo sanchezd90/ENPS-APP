@@ -2,8 +2,8 @@ import pymongo
 import re
 import os
 
-cluster=os.environ.get("CLUSTER","mongoDB cluster")
-db=cluster["ENPS"]
+cluster=os.environ.get("CLUSTER","CLUSTER")
+db=cluster
 
 #NORMAS
 
