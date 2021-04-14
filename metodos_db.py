@@ -3,7 +3,8 @@ import re
 import os
 
 cluster=os.environ.get("CLUSTER","CLUSTER")
-db=cluster
+cluster=dict(cluster)
+db=cluster["ENPS"]
 
 #NORMAS
 
