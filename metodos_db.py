@@ -11,11 +11,12 @@ password=os.getenv("MONGO_PASS")
 puerto=os.getenv("MONGO_PORT")
 servicio=os.getenv("MONGO_SERVICE")
 
+
 #conectar con MongoDB
-mongostring=f"mongodb://{usuario}:{password}@{servicio}:{puerto}/{usuario}?retryWrites=true&w=majority"
+mongostring=f"mongodb+srv://{usuario}:{password}@{servicio}?retryWrites=true&w=majority"
 
 cluster=pymongo.MongoClient(mongostring)
-db=cluster["enps"]
+db=cluster["ENPS"]
 
 #NORMAS
 
