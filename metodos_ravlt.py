@@ -4,12 +4,8 @@ import re
 import datetime
 import pymongo
 from metodos_db import *
+import os
 
-cluster=pymongo.MongoClient("mongodb+srv://sanchezd90:dbuser-L6H6@cluster0.wwnbb.mongodb.net/<ENPS>?retryWrites=true&w=majority")
-db=cluster["ENPS"]
-col=db["normas"]
-doc=col.find({"prueba":"RAVLT"})
-normas=doc[0]
 
 trialnames={
     0:"t1",
@@ -82,10 +78,6 @@ def sort(entrada,tipo,listaA,listaB):
             if x not in listaA and x not in listaB:
                 out.append(x)
     return out
-
-def convert_scores():
-    for x in raw_scores:
-        z_scores[x]=(raw_scores[x]-normas_sujeto[x][0])/normas_sujeto[x][1]
 
 def update_raw(self):
     raw_scores={

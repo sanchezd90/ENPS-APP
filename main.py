@@ -4,15 +4,14 @@ from metodos_db import *
 from metodos_redaccion import *
 from metodos_app import *
 import datetime
+import os
 
 
 app = Flask(__name__)
 app.secret_key="a2S3d4F"
+app_puerto=os.getenv("SERVICE_PORT")
+app_base_url=os.getenv("BASE_URL")
 
-#
-@app.route("/")
-def inicio_www():
-    return redirect(url_for("enps_www"))
 
 #
 @app.route("/enps", methods=["GET","POST"])
@@ -43,9 +42,9 @@ def enps_set_www():
         fecha=datetime.datetime.now()
         fecha=fecha.strftime("%d/%m/%y")
         insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo_evento, fecha, fechaNac)
-        return redirect(url_for("evento_www"))
+        return redirect( app_base_url + "/enps/evento" )
     else:
-        return redirect(url_for("create_www"))
+        return redirect( app_base_url + "/enps/evento" )
 
 #
 @app.route("/enps/recover", methods=["GET","POST"])
@@ -65,7 +64,7 @@ def search_www():
 @app.route("/enps/recover/<codigo>", methods=["GET","POST"])
 def recover_cod_www(codigo):
     session["cod_evento"]=codigo
-    return redirect(url_for("evento_www"))
+    return redirect( app_base_url + "/enps/evento" )
 
 #
 @app.route("/enps/evento", methods=["GET","POST"])
@@ -142,7 +141,7 @@ def anamnesis_set_www():
     observaciones=request.form["observaciones"]
     info={"antecedentes":antecedentes,"observaciones":observaciones}
     update_event(cod_evento, "info", info)
-    return redirect(url_for("anamnesis_www"))
+    return redirect( app_base_url + "/enps/anamnesis" )
 
 #home para cargar los datos iniciales
 @app.route("/enps/ravlt/config", methods=["GET","POST"])
@@ -273,12 +272,14 @@ def ravlt_set_www():
         dicc_session["obs"]=""
         session["ravlt_obs"]=""
         dicc_session["prueba"]="ravlt"
+        dicc_session.pop("ravlt_tnames")
+        print(dicc_session)
         insert_doc(dicc_session)
         relacionar(codigo_evento, codigo_prueba)
 
-        return redirect(url_for("ravlt_www"))
+        return redirect( app_base_url + "/enps/ravlt" )
     else:
-        return redirect(url_for("ravlt_config_www"))
+        return redirect( app_base_url + "/enps/ravlt/config" )
 
 @app.route("/enps/ravlt/recover/<cod_prueba>", methods=["GET","POST"])
 def ravlt_recover_www(cod_prueba):
@@ -322,7 +323,7 @@ def ravlt_recover_www(cod_prueba):
     prueba=datos_prueba["prueba"]
     dicc_session["prueba"]=prueba
 
-    return redirect(url_for("ravlt_www"))
+    return redirect( app_base_url + "/enps/ravlt" )
 
 @app.route("/enps/ravlt/trial/<string:trial_name>", methods=["GET","POST"])
 def ravlt_t_www(trial_name):
@@ -419,7 +420,7 @@ def ravlt_last_www():
     registrarTrial(listaA,listaB,trial_num,normas_sujeto,True)
 
 
-    return redirect(url_for("ravlt_www"))
+    return redirect( app_base_url + "/enps/ravlt" )
 
 @app.route("/enps/ravlt", methods=["GET","POST"])
 def ravlt_www():
@@ -480,6 +481,4 @@ def ravlt_www():
         )
 
 
-if __name__ == '__main__':
-  app.run()
 

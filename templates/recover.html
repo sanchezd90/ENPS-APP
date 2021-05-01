@@ -9,16 +9,36 @@
   <div class="d-block mx-auto mb-4">
     <table class="table table-hover w-50 mx-auto">
       <h5>Evaluciones recientes</h5>
+      {% if eventos|length()>0%}
       <tr>
         <th>Paciente</th>
         <th>Fecha</th>
       </tr>
-        {% for x in range (1,6) %}
+        {% if eventos|length() < 2 %}
+          <tr>
+            <td><a href="/enps/recover/{{eventos[0]['cod_evento']}}">{{eventos[0]['apellido'] | title() }}, {{eventos[0]['nombre'] | title()}}</a></td>
+            <td>{{eventos[0]['fecha']}}</td>
+          </tr>
+        {% elif eventos|length() < 6 %}
+          {% for x in range (1, eventos|length()+1) %}
+          <tr>
+            <td><a href="/enps/recover/{{eventos[-x]['cod_evento']}}">{{eventos[-x]['apellido'] | title() }}, {{eventos[-x]['nombre'] | title()}}</a></td>
+            <td>{{eventos[-x]['fecha']}}</td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          {% for x in range (1,6) %}
+          <tr>
+            <td><a href="/enps/recover/{{eventos[-x]['cod_evento']}}">{{eventos[-x]['apellido'] | title() }}, {{eventos[-x]['nombre'] | title()}}</a></td>
+            <td>{{eventos[-x]['fecha']}}</td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      {% else %}
         <tr>
-          <td><a href="/enps/recover/{{eventos[-x]['cod_evento']}}">{{eventos[-x]['apellido'] | title() }}, {{eventos[-x]['nombre'] | title()}}</a></td>
-          <td>{{eventos[-x]['fecha']}}</td>
+          <td>No hay evaluaciones para mostrar</td>
         </tr>
-        {% endfor %}
+      {% endif %}
     </table>
   </div>
 

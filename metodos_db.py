@@ -2,10 +2,20 @@ import pymongo
 import re
 import os
 
-key=os.environ.get("password","")
-srv="mongodb+srv://sanchezd90:"+key+"@cluster0.wwnbb.mongodb.net/<ENPS>?retryWrites=true&w=majority"
-cluster=pymongo.MongoClient(srv)
-db=cluster["ENPS"]
+#recuperar variables de entorno - SOLO DESDE LOCAL (MAC)
+#from dotenv import load_dotenv
+#load_dotenv()
+
+usuario=os.getenv("SERVICE_NAME")
+password=os.getenv("MONGO_PASS")
+puerto=os.getenv("MONGO_PORT")
+servicio=os.getenv("MONGO_SERVICE")
+
+#conectar con MongoDB
+mongostring=f"mongodb://{usuario}:{password}@{servicio}:{puerto}/{usuario}?retryWrites=true&w=majority"
+
+cluster=pymongo.MongoClient(mongostring)
+db=cluster["enps"]
 
 #NORMAS
 
@@ -76,7 +86,8 @@ def insert_event(nombre, apellido, dni, edad, educacion, sexo, codigo, fecha, fe
         "cod_evento":codigo,
         "fecha":fecha,
         "pruebas_admin":None,
-        "reportes":{}
+        "reportes":{},
+        "info":{"antecedentes":None,"observaciones":None}
         }
     doc=datos
     return col.insert_one(doc)
